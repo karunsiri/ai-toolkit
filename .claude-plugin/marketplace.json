@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "karunsiri-ai-toolkit",
+  "description": "AI Toolkit for self productivity",
+  "owner": {
+    "name": "Karun Siritheerathamrong",
+    "url": "https://github.com/karunsiri"
+  },
+  "plugins": [
+    {
+      "name": "session-handoff",
+      "description": "Creates comprehensive skill handoff documents enabling AI to continue work without ambiguity",
+      "source": "./plugins/session-handoff",
+      "category": "productivity"
+    }
+  ]
+}
