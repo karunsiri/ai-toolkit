@@ -1,6 +1,11 @@
 ---
 name: session-handoff
-description: "Creates comprehensive handoff documents for seamless AI agent session transfers. Triggered when: (1) user requests handoff/memory/context save, (2) context window approaches capacity, (3) major task milestone completed, (4) work session ending, (5) user says 'save state', 'create handoff', 'context is getting full', (6) resuming work with 'load handoff', 'resume from', 'continue where we left off'. Proactively suggests handoffs after substantial work (multiple file edits, complex debugging, architecture decisions). Solves long-running agent context exhaustion by enabling fresh agents to continue with zero ambiguity."
+description: >
+  This skill should be used when the user wants to "create a handoff", "save state",
+  "save context", "context is getting full", "resume from handoff", "continue where
+  we left off", or "load handoff". Also triggers proactively after substantial work
+  (multiple file edits, complex debugging, architecture decisions) to suggest saving
+  context. Enables fresh agents to continue long-running work with zero ambiguity.
 ---
 
 # Handoff

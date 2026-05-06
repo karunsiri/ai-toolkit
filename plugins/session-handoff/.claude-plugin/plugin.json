@@ -1,0 +1,9 @@
+{
+  "name": "session-handoff",
+  "version": "0.1.0",
+  "description": "Create and resume AI session handoff documents to preserve context across sessions",
+  "author": {
+    "name": "Karun Siritheerathamrong"
+  },
+  "keywords": ["handoff", "context", "session", "memory"]
+}
