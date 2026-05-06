@@ -1,11 +1,11 @@
 ---
 name: product-listing
-description: |
-    Search for a product on an E-commerce platform — shopee.co.th with a search
-    conditions including a product name, keyword, price range, Official Mall status.
-    Triggered when:
-      - user wants to search a product on Shopee.
-      - user is looking for an item to buy online
+description: >
+  This skill should be used when the user wants to "search for a product on Shopee",
+  "find something to buy on Shopee", "look up prices on Shopee", "research products
+  on shopee.co.th", or is looking for an item to buy online and wants Shopee results.
+  Supports filtering by price range, shop type (Official Mall, Preferred), and
+  delivery speed.
 ---
 
 ## Search URL

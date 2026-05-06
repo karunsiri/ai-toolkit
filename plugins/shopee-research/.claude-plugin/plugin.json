@@ -1,0 +1,9 @@
+{
+  "name": "shopee-research",
+  "version": "0.1.0",
+  "description": "Search and research products on Shopee Thailand",
+  "author": {
+    "name": "Karun Siritheerathamrong"
+  },
+  "keywords": ["shopee", "ecommerce", "product-research", "thailand"]
+}
