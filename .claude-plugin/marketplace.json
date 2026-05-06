@@ -12,6 +12,12 @@
       "description": "Creates comprehensive skill handoff documents enabling AI to continue work without ambiguity",
       "source": "./plugins/session-handoff",
       "category": "productivity"
+    },
+    {
+      "name": "shopee-research",
+      "description": "Search products through Shopee",
+      "source": "./plugins/shopee-research",
+      "category": "productivity"
     }
   ]
 }
