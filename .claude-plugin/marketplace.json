@@ -8,13 +8,13 @@
   },
   "plugins": [
     {
-      "name": "session-handoff",
+      "name": "Productivity",
       "description": "Creates comprehensive skill handoff documents enabling AI to continue work without ambiguity",
-      "source": "./plugins/session-handoff",
+      "source": "./plugins/productivity",
       "category": "productivity"
     },
     {
-      "name": "engineering",
+      "name": "Engineering",
       "description": "Engineering workflows — debugging. Customized for DevOps, Ruby, systems, cloud-native, and web app work.",
       "source": "./plugins/engineering",
       "category": "engineering"

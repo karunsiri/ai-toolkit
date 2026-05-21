@@ -11,7 +11,7 @@ claude plugin marketplace add karunsiri/ai-toolkit
 
 # Install plugins
 claude plugin install engineering@karunsiri-ai-toolkit
-claude plugin install session-handoff@karunsiri-ai-toolkit
+claude plugin install Productivity@karunsiri-ai-toolkit
 ```
 
 ### From cloned source
@@ -22,7 +22,7 @@ claude plugin marketplace add ./ai-toolkit
 
 # Install plugins
 claude plugin install engineering@karunsiri-ai-toolkit
-claude plugin install session-handoff@karunsiri-ai-toolkit
+claude plugin install Productivity@karunsiri-ai-toolkit
 ```
 
 Scope options: `--scope user` (default), `--scope project` (shared with team), `--scope local` (gitignored).
@@ -43,7 +43,7 @@ Works standalone or with connected tools (GitHub, Linear, Datadog, PagerDuty).
 claude plugin install engineering@karunsiri-ai-toolkit
 ```
 
-### [session-handoff](plugins/session-handoff)
+### [Productivity](plugins/productivity)
 
 Create and resume session handoff documents so a fresh agent can continue long-running work with zero ambiguity.
 
@@ -52,7 +52,7 @@ Create and resume session handoff documents so a fresh agent can continue long-r
 | `/session-handoff` | Create or resume a handoff document |
 
 ```bash
-claude plugin install session-handoff@karunsiri-ai-toolkit
+claude plugin install Productivity@karunsiri-ai-toolkit
 ```
 
 ## Structure
@@ -68,7 +68,7 @@ plugins/
 │   └── skills/
 │       └── dbg/
 │           └── SKILL.md
-└── session-handoff/      # Session continuity
+└── productivity/         # Session continuity
     ├── .claude-plugin/
     │   └── plugin.json
     └── skills/

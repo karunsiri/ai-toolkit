@@ -1,7 +1,7 @@
 {
-  "name": "engineering",
-  "version": "0.1.0",
-  "description": "Engineering workflows — debugging, code review, architecture decisions, incident response, and technical documentation. Customized for DevOps, Ruby, systems, cloud-native, and web app work.",
+  "name": "Engineering",
+  "version": "0.1.1",
+  "description": "Engineering workflows — debugging. Customized for DevOps, Ruby, systems, cloud-native, and web app work.",
   "author": {
     "name": "Karun Siritheerathamrong"
   },
