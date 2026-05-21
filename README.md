@@ -4,11 +4,21 @@ Claude Code plugins for personal engineering productivity. Covers session contin
 
 ## Installation
 
-Register this repo as a marketplace, then install individual plugins:
+### From GitHub (without cloning)
 
 ```bash
-# Register once
-claude plugin marketplace add /path/to/ai-toolkit
+claude plugin marketplace add karunsiri/ai-toolkit
+
+# Install plugins
+claude plugin install engineering@karunsiri-ai-toolkit
+claude plugin install session-handoff@karunsiri-ai-toolkit
+```
+
+### From cloned source
+
+```bash
+git clone https://github.com/karunsiri/ai-toolkit.git
+claude plugin marketplace add ./ai-toolkit
 
 # Install plugins
 claude plugin install engineering@karunsiri-ai-toolkit
