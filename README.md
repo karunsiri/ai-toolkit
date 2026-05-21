@@ -11,7 +11,7 @@ claude plugin marketplace add karunsiri/ai-toolkit
 
 # Install plugins
 claude plugin install engineering@karunsiri-ai-toolkit
-claude plugin install Productivity@karunsiri-ai-toolkit
+claude plugin install productivity@karunsiri-ai-toolkit
 ```
 
 ### From cloned source
@@ -22,7 +22,7 @@ claude plugin marketplace add ./ai-toolkit
 
 # Install plugins
 claude plugin install engineering@karunsiri-ai-toolkit
-claude plugin install Productivity@karunsiri-ai-toolkit
+claude plugin install productivity@karunsiri-ai-toolkit
 ```
 
 Scope options: `--scope user` (default), `--scope project` (shared with team), `--scope local` (gitignored).
@@ -52,7 +52,7 @@ Create and resume session handoff documents so a fresh agent can continue long-r
 | `/session-handoff` | Create or resume a handoff document |
 
 ```bash
-claude plugin install Productivity@karunsiri-ai-toolkit
+claude plugin install productivity@karunsiri-ai-toolkit
 ```
 
 ## Structure
