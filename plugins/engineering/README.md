@@ -6,7 +6,7 @@ Custom engineering plugin for DevOps, Ruby, systems, cloud-native, and web app w
 
 | Command | Description |
 |---|---|
-| `/debug` | Structured debugging session — reproduce, isolate, diagnose, and fix |
+| `/dbg` | Structured debugging session — reproduce, isolate, diagnose, and fix |
 
 ## Skills
 
@@ -14,14 +14,14 @@ Domain knowledge Claude uses automatically when relevant:
 
 | Skill | Description |
 |---|---|
-| `debug` | Reproduce, isolate, diagnose, and fix bugs across any stack |
+| `dbg` | Reproduce, isolate, diagnose, and fix bugs across any stack |
 
 ## Example Workflows
 
 ### Debug a problem
 
 ```
-/debug Users are getting 500 errors on checkout
+/dbg Users are getting 500 errors on checkout
 ```
 
 Walk through a structured debugging process: clarify expected vs actual, capture reproduction steps, isolate the fail path, form ranked hypotheses, fix.

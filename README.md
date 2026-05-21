@@ -35,7 +35,7 @@ Structured engineering workflows — debugging, code review, architecture decisi
 
 | Command | Description |
 |---|---|
-| `/debug` | Reproduce, isolate, diagnose, and fix bugs across any stack |
+| `/dbg` | Reproduce, isolate, diagnose, and fix bugs across any stack |
 
 Works standalone or with connected tools (GitHub, Linear, Datadog, PagerDuty).
 
@@ -66,7 +66,7 @@ plugins/
 │   ├── CONNECTORS.md
 │   ├── README.md
 │   └── skills/
-│       └── debug/
+│       └── dbg/
 │           └── SKILL.md
 └── session-handoff/      # Session continuity
     ├── .claude-plugin/
