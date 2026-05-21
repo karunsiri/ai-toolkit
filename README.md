@@ -2,6 +2,21 @@
 
 Claude Code plugins for personal engineering productivity. Covers session continuity and structured engineering workflows across DevOps, Ruby, systems, cloud-native, and web app work.
 
+## Installation
+
+Register this repo as a marketplace, then install individual plugins:
+
+```bash
+# Register once
+claude plugin marketplace add /path/to/ai-toolkit
+
+# Install plugins
+claude plugin install engineering@karunsiri-ai-toolkit
+claude plugin install session-handoff@karunsiri-ai-toolkit
+```
+
+Scope options: `--scope user` (default), `--scope project` (shared with team), `--scope local` (gitignored).
+
 ## Plugins
 
 ### [engineering](plugins/engineering)
@@ -15,7 +30,7 @@ Structured engineering workflows — debugging, code review, architecture decisi
 Works standalone or with connected tools (GitHub, Linear, Datadog, PagerDuty).
 
 ```bash
-claude plugins add karunsiri-ai-toolkit/engineering
+claude plugin install engineering@karunsiri-ai-toolkit
 ```
 
 ### [session-handoff](plugins/session-handoff)
@@ -27,7 +42,7 @@ Create and resume session handoff documents so a fresh agent can continue long-r
 | `/session-handoff` | Create or resume a handoff document |
 
 ```bash
-claude plugins add karunsiri-ai-toolkit/session-handoff
+claude plugin install session-handoff@karunsiri-ai-toolkit
 ```
 
 ## Structure
