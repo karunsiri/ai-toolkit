@@ -60,14 +60,14 @@ Loads and validates existing handoff documents:
 ## Key Features
 
 ### Smart Scaffolding
-The `create_handoff.py` script automatically captures:
+The `create_handoff.sh` script automatically captures:
 - Timestamp and project path
 - Current git branch and recent commits
 - Modified and unstaged files
 - Handoff chain links (if continuing from previous)
 
 ### Validation & Quality Assurance
-The `validate_handoff.py` script checks:
+The `validate_handoff.sh` script checks:
 - No incomplete `[TODO: ...]` placeholders
 - All required sections populated
 - No potential secrets (API keys, passwords, tokens)
@@ -75,7 +75,7 @@ The `validate_handoff.py` script checks:
 - Quality score (0-100)
 
 ### Staleness Detection
-The `check_staleness.py` script assesses:
+The `check_staleness.sh` script assesses:
 - Time elapsed since handoff creation
 - Git commits made since handoff
 - Files changed since handoff
@@ -100,29 +100,29 @@ Each handoff links to its predecessor, providing context breadcrumbs for new age
 
 **Basic handoff creation:**
 ```bash
-python scripts/create_handoff.py implementing-user-auth
+bash scripts/create_handoff.sh implementing-user-auth
 ```
 
 **Continuation handoff (linked to previous):**
 ```bash
-python scripts/create_handoff.py "auth-part-2" --continues-from 2024-01-15-auth.md
+bash scripts/create_handoff.sh "auth-part-2" --continues-from 2024-01-15-auth.md
 ```
 
 **Validate before finalizing:**
 ```bash
-python scripts/validate_handoff.py .claude/handoffs/2024-01-15-143022-implementing-auth.md
+bash scripts/validate_handoff.sh .claude/handoffs/2024-01-15-143022-implementing-auth.md
 ```
 
 ### Resuming from a Handoff
 
 **List available handoffs:**
 ```bash
-python scripts/list_handoffs.py
+bash scripts/list_handoffs.sh
 ```
 
 **Check if handoff is current:**
 ```bash
-python scripts/check_staleness.py .claude/handoffs/2024-01-15-143022-implementing-auth.md
+bash scripts/check_staleness.sh .claude/handoffs/2024-01-15-143022-implementing-auth.md
 ```
 
 **Load and continue work:**
@@ -159,10 +159,10 @@ Example: `2024-01-15-143022-implementing-auth.md`
 
 | Script | Purpose | Usage |
 |--------|---------|-------|
-| `create_handoff.py` | Generate new handoff with smart scaffolding | `python scripts/create_handoff.py [slug] [--continues-from <file>]` |
-| `list_handoffs.py` | List available handoffs in a project | `python scripts/list_handoffs.py [path]` |
-| `validate_handoff.py` | Check completeness, quality, and security | `python scripts/validate_handoff.py <file>` |
-| `check_staleness.py` | Assess if handoff context is still current | `python scripts/check_staleness.py <file>` |
+| `create_handoff.sh` | Generate new handoff with smart scaffolding | `bash scripts/create_handoff.sh [slug] [--continues-from <file>]` |
+| `list_handoffs.sh` | List available handoffs in a project | `bash scripts/list_handoffs.sh [path]` |
+| `validate_handoff.sh` | Check completeness, quality, and security | `bash scripts/validate_handoff.sh <file>` |
+| `check_staleness.sh` | Assess if handoff context is still current | `bash scripts/check_staleness.sh <file>` |
 
 ## Quality Standards
 

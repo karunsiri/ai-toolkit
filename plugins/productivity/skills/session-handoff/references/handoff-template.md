@@ -101,4 +101,4 @@ session_duration: [estimate how long you worked]
 
 ---
 
-**Security Reminder**: Before finalizing, run `python scripts/validate_handoff.py` to check for accidental secret exposure.
+**Security Reminder**: Before finalizing, run `bash scripts/validate_handoff.sh` to check for accidental secret exposure.

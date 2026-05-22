@@ -4,7 +4,7 @@ Use @handoff-template.md as structure when creating handoff documents. The smart
 will pre-fill `{{TOKEN}}` fields automatically; complete the `[TODO: ...]` sections based on session
 context.
 
-**Security Reminder**: Before finalizing, run `python scripts/validate_handoff.py` to check for accidental secret exposure.
+**Security Reminder**: Before finalizing, run `bash scripts/validate_handoff.sh` to check for accidental secret exposure.
 
 ## Template Usage Notes
 

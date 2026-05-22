@@ -75,7 +75,7 @@ Follow the rules in [references/handoff-template-rule.md](references/handoff-tem
 Run the validation script to check completeness and security:
 
 ```bash
-python scripts/validate_handoff.py <handoff-file>
+bash scripts/validate_handoff.sh <handoff-file>
 ```
 
 The validator checks:
@@ -112,7 +112,7 @@ This shows all handoffs with dates, titles, and completion status.
 Before loading, check how current the handoff is:
 
 ```bash
-python scripts/check_staleness.py <handoff-file>
+bash scripts/check_staleness.sh <handoff-file>
 ```
 
 Staleness levels:
@@ -195,8 +195,8 @@ Example: `2024-01-15-143022-implementing-auth.md`
 |--------|---------|
 | `create_handoff.sh [slug] [--continues-from <file>]` | Generate new handoff with smart scaffolding |
 | `list_handoffs.sh [path]` | List available handoffs in a project |
-| `validate_handoff.py <file>` | Check completeness, quality, and security |
-| `check_staleness.py <file>` | Assess if handoff context is still current |
+| `validate_handoff.sh <file>` | Check completeness, quality, and security |
+| `check_staleness.sh <file>` | Assess if handoff context is still current |
 
 ### references/
 
