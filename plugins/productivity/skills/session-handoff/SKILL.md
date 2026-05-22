@@ -32,20 +32,30 @@ Determine which mode applies:
 Run the smart scaffold script to create a pre-filled handoff document:
 
 ```bash
-python scripts/create_handoff.py [task-slug]
+bash scripts/create_handoff.sh [task-slug]
 ```
 
-Example: `python scripts/create_handoff.py implementing-user-auth`
+Example: `bash scripts/create_handoff.sh implementing-user-auth`
 
 **For continuation handoffs** (linking to previous work):
 ```bash
-python scripts/create_handoff.py "auth-part-2" --continues-from 2024-01-15-auth.md
+bash scripts/create_handoff.sh "auth-part-2" --continues-from 2024-01-15-auth.md
 ```
 
 The script will:
 - Create `.claude/handoffs/` directory if needed
 - Generate timestamped filename
-- Pre-fill: timestamp, project path, git branch, recent commits, modified files
+- Pre-fill session metadata as YAML frontmatter at the top of the file:
+  ```yaml
+  ---
+  title: Title of the task
+  created: YYYY-MM-DD HH:MM:SS
+  project: /path/to/project
+  branch: main
+  session_duration: [estimate how long you worked]
+  ---
+  ```
+- Pre-fill body: recent commits, modified files
 - Add handoff chain links if continuing from previous
 - Output file path for editing
 
@@ -58,7 +68,7 @@ Open the generated file and fill in all `[TODO: ...]` sections. Prioritize these
 3. **Immediate Next Steps** - Clear, actionable first steps
 4. **Decisions Made** - Choices with rationale (not just outcomes)
 
-Use the template structure in [references/handoff-template.md](references/handoff-template.md) for guidance.
+Follow the rules in [references/handoff-template-rule.md](references/handoff-template-rule.md) for guidance.
 
 ### Step 3: Validate the Handoff
 
@@ -92,7 +102,7 @@ Report to user:
 List handoffs in the current project:
 
 ```bash
-python scripts/list_handoffs.py
+bash scripts/list_handoffs.sh
 ```
 
 This shows all handoffs with dates, titles, and completion status.
@@ -183,12 +193,13 @@ Example: `2024-01-15-143022-implementing-auth.md`
 
 | Script | Purpose |
 |--------|---------|
-| `create_handoff.py [slug] [--continues-from <file>]` | Generate new handoff with smart scaffolding |
-| `list_handoffs.py [path]` | List available handoffs in a project |
+| `create_handoff.sh [slug] [--continues-from <file>]` | Generate new handoff with smart scaffolding |
+| `list_handoffs.sh [path]` | List available handoffs in a project |
 | `validate_handoff.py <file>` | Check completeness, quality, and security |
 | `check_staleness.py <file>` | Assess if handoff context is still current |
 
 ### references/
 
-- [handoff-template.md](references/handoff-template.md) - Complete template structure with guidance
+- [handoff-template.md](references/handoff-template.md) - Handoff document template (used by create_handoff.sh)
+- [handoff-template-rule.md](references/handoff-template-rule.md) - Rules for completing handoff documents
 - [resume-checklist.md](references/resume-checklist.md) - Verification checklist for resuming agents
