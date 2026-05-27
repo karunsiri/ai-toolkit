@@ -2,10 +2,10 @@
 set -euo pipefail
 
 PROJECT_PATH="${1:-$(pwd)}"
-HANDOFFS_DIR="$PROJECT_PATH/.claude/handoffs"
+HANDOFFS_DIR="$PROJECT_PATH/.agents/handoffs"
 
 if [[ ! -d "$HANDOFFS_DIR" ]]; then
-  echo "No handoffs found in $PROJECT_PATH/.claude/handoffs/"
+  echo "No handoffs found in $PROJECT_PATH/.agents/handoffs/"
   echo ""
   echo "To create a handoff, run: bash scripts/create_handoff.sh [task-slug]"
   exit 0
@@ -19,7 +19,7 @@ while IFS= read -r line; do
 done < <(ls -1 "$HANDOFFS_DIR"/*.md 2>/dev/null | sort -r)
 
 if [[ ${#FILES[@]} -eq 0 ]]; then
-  echo "No handoffs found in $PROJECT_PATH/.claude/handoffs/"
+  echo "No handoffs found in $PROJECT_PATH/.agents/handoffs/"
   echo ""
   echo "To create a handoff, run: bash scripts/create_handoff.sh [task-slug]"
   exit 0

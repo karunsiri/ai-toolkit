@@ -21,7 +21,7 @@ if [[ ! -f "$TEMPLATE" ]]; then
 fi
 
 PROJECT_PATH="$PWD"
-HANDOFFS_DIR="$PROJECT_PATH/.claude/handoffs"
+HANDOFFS_DIR="$PROJECT_PATH/.agents/handoffs"
 
 # Timestamp
 TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")

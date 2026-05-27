@@ -110,7 +110,7 @@ bash scripts/create_handoff.sh "auth-part-2" --continues-from 2024-01-15-auth.md
 
 **Validate before finalizing:**
 ```bash
-bash scripts/validate_handoff.sh .claude/handoffs/2024-01-15-143022-implementing-auth.md
+bash scripts/validate_handoff.sh .agents/handoffs/2024-01-15-143022-implementing-auth.md
 ```
 
 ### Resuming from a Handoff
@@ -122,7 +122,7 @@ bash scripts/list_handoffs.sh
 
 **Check if handoff is current:**
 ```bash
-bash scripts/check_staleness.sh .claude/handoffs/2024-01-15-143022-implementing-auth.md
+bash scripts/check_staleness.sh .agents/handoffs/2024-01-15-143022-implementing-auth.md
 ```
 
 **Load and continue work:**
@@ -149,7 +149,7 @@ See [references/handoff-template.md](references/handoff-template.md) for the com
 
 ## Storage Location
 
-Handoffs are stored in: `.claude/handoffs/`
+Handoffs are stored in: `.agents/handoffs/`
 
 Naming convention: `YYYY-MM-DD-HHMMSS-[slug].md`
 

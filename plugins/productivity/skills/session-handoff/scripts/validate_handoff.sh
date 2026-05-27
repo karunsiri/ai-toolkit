@@ -4,7 +4,7 @@ set -euo pipefail
 FILEPATH="${1:-}"
 if [[ -z "$FILEPATH" ]]; then
   echo "Usage: bash validate_handoff.sh <handoff-file>"
-  echo "Example: bash validate_handoff.sh .claude/handoffs/2024-01-15-auth.md"
+  echo "Example: bash validate_handoff.sh .agents/handoffs/2024-01-15-auth.md"
   exit 1
 fi
 
@@ -13,7 +13,7 @@ if [[ ! -f "$FILEPATH" ]]; then
   exit 1
 fi
 
-# Base path: assume file lives at project/.claude/handoffs/file.md
+# Base path: assume file lives at project/.agents/handoffs/file.md
 BASE_PATH="$(cd "$(dirname "$FILEPATH")/../.." && pwd)"
 
 # --- TODO check ---

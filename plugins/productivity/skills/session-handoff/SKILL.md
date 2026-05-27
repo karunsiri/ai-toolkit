@@ -32,18 +32,19 @@ Determine which mode applies:
 Run the smart scaffold script to create a pre-filled handoff document:
 
 ```bash
-bash scripts/create_handoff.sh [task-slug]
+HANDOFF_SCRIPTS="${CURSOR_PLUGIN_ROOT:+$CURSOR_PLUGIN_ROOT/productivity/skills/session-handoff/}scripts"
+bash "$HANDOFF_SCRIPTS/create_handoff.sh" [task-slug]
 ```
 
-Example: `bash scripts/create_handoff.sh implementing-user-auth`
+Example: `bash "$HANDOFF_SCRIPTS/create_handoff.sh" implementing-user-auth`
 
 **For continuation handoffs** (linking to previous work):
 ```bash
-bash scripts/create_handoff.sh "auth-part-2" --continues-from 2024-01-15-auth.md
+bash "$HANDOFF_SCRIPTS/create_handoff.sh" "auth-part-2" --continues-from 2024-01-15-auth.md
 ```
 
 The script will:
-- Create `.claude/handoffs/` directory if needed
+- Create `.agents/handoffs/` directory if needed
 - Generate timestamped filename
 - Pre-fill session metadata as YAML frontmatter at the top of the file:
   ```yaml
@@ -75,7 +76,7 @@ Follow the rules in [references/handoff-template-rule.md](references/handoff-tem
 Run the validation script to check completeness and security:
 
 ```bash
-bash scripts/validate_handoff.sh <handoff-file>
+bash "$HANDOFF_SCRIPTS/validate_handoff.sh" <handoff-file>
 ```
 
 The validator checks:
@@ -102,7 +103,8 @@ Report to user:
 List handoffs in the current project:
 
 ```bash
-bash scripts/list_handoffs.sh
+HANDOFF_SCRIPTS="${CURSOR_PLUGIN_ROOT:+$CURSOR_PLUGIN_ROOT/productivity/skills/session-handoff/}scripts"
+bash "$HANDOFF_SCRIPTS/list_handoffs.sh"
 ```
 
 This shows all handoffs with dates, titles, and completion status.
@@ -112,7 +114,7 @@ This shows all handoffs with dates, titles, and completion status.
 Before loading, check how current the handoff is:
 
 ```bash
-bash scripts/check_staleness.sh <handoff-file>
+bash "$HANDOFF_SCRIPTS/check_staleness.sh" <handoff-file>
 ```
 
 Staleness levels:
@@ -181,7 +183,7 @@ When resuming from a chain, read the most recent handoff first, then reference p
 
 ## Storage Location
 
-Handoffs are stored in: `.claude/handoffs/`
+Handoffs are stored in: `.agents/handoffs/`
 
 Naming convention: `YYYY-MM-DD-HHMMSS-[slug].md`
 

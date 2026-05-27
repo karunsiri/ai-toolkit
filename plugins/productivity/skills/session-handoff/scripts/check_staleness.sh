@@ -4,7 +4,7 @@ set -euo pipefail
 HANDOFF_PATH="${1:-}"
 if [[ -z "$HANDOFF_PATH" ]]; then
   echo "Usage: bash check_staleness.sh <handoff-file>"
-  echo "Example: bash check_staleness.sh .claude/handoffs/2024-01-15-auth.md"
+  echo "Example: bash check_staleness.sh .agents/handoffs/2024-01-15-auth.md"
   exit 1
 fi
 
