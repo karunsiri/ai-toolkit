@@ -1,10 +1,12 @@
 # ai-toolkit
 
-Claude Code plugins for personal engineering productivity. Covers session continuity and structured engineering workflows across DevOps, Ruby, systems, cloud-native, and web app work.
+Plugins for personal engineering productivity — compatible with Claude Code and Cursor. Covers session continuity and structured engineering workflows across DevOps, Ruby, systems, cloud-native, and web app work.
 
 ## Installation
 
-### From GitHub (without cloning)
+### Claude Code
+
+#### From GitHub (without cloning)
 
 ```bash
 claude plugin marketplace add karunsiri/ai-toolkit
@@ -14,7 +16,7 @@ claude plugin install engineering@karunsiri-ai-toolkit
 claude plugin install productivity@karunsiri-ai-toolkit
 ```
 
-### From cloned source
+#### From cloned source
 
 ```bash
 git clone https://github.com/karunsiri/ai-toolkit.git
@@ -26,6 +28,25 @@ claude plugin install productivity@karunsiri-ai-toolkit
 ```
 
 Scope options: `--scope user` (default), `--scope project` (shared with team), `--scope local` (gitignored).
+
+### Cursor
+
+#### From Cursor Marketplace
+
+Search `karunsiri-ai-toolkit` in Cursor Settings → Plugins.
+
+#### From cloned source
+
+```bash
+git clone https://github.com/karunsiri/ai-toolkit.git
+
+# Symlink plugins into Cursor's local plugin directory
+mkdir -p ~/.cursor/plugins/local
+ln -s "$(pwd)/ai-toolkit/plugins/engineering" ~/.cursor/plugins/local/engineering
+ln -s "$(pwd)/ai-toolkit/plugins/productivity" ~/.cursor/plugins/local/productivity
+```
+
+Then verify in Cursor: Settings → Plugins → confirm both plugins appear.
 
 ## Plugins
 
@@ -61,8 +82,11 @@ claude plugin install productivity@karunsiri-ai-toolkit
 plugins/
 ├── engineering/          # Engineering workflows
 │   ├── .claude-plugin/
-│   │   └── plugin.json
-│   ├── .mcp.json         # MCP server configs
+│   │   └── plugin.json   # Claude Code manifest
+│   ├── .cursor-plugin/
+│   │   └── plugin.json   # Cursor manifest
+│   ├── .mcp.json         # MCP servers (Claude Code)
+│   ├── mcp.json          # MCP servers (Cursor)
 │   ├── CONNECTORS.md
 │   ├── README.md
 │   └── skills/
@@ -70,7 +94,11 @@ plugins/
 │           └── SKILL.md
 └── productivity/         # Session continuity
     ├── .claude-plugin/
-    │   └── plugin.json
+    │   └── plugin.json   # Claude Code manifest
+    ├── .cursor-plugin/
+    │   └── plugin.json   # Cursor manifest
+    ├── .mcp.json         # MCP servers (Claude Code)
+    ├── mcp.json          # MCP servers (Cursor)
     └── skills/
         └── session-handoff/
             ├── SKILL.md

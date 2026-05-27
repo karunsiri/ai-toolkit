@@ -1,0 +1,11 @@
+{
+  "name": "productivity",
+  "displayName": "Productivity",
+  "version": "0.1.3",
+  "description": "Create and resume AI session handoff documents to preserve context across sessions",
+  "author": { "name": "Karun Siritheerathamrong" },
+  "repository": "https://github.com/karunsiri/ai-toolkit",
+  "keywords": ["handoff", "context", "session", "memory"],
+  "category": "productivity",
+  "skills": "./skills/"
+}
