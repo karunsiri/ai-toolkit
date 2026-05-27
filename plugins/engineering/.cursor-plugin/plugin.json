@@ -1,0 +1,11 @@
+{
+  "name": "engineering",
+  "displayName": "Engineering",
+  "version": "0.1.1",
+  "description": "Engineering workflows — debugging. Customized for DevOps, Ruby, systems, cloud-native, and web app work.",
+  "author": { "name": "Karun Siritheerathamrong" },
+  "repository": "https://github.com/karunsiri/ai-toolkit",
+  "keywords": ["debug", "engineering"],
+  "category": "developer-tools",
+  "skills": "./skills/"
+}

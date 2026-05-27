@@ -1,0 +1,22 @@
+{
+  "name": "karunsiri-ai-toolkit",
+  "description": "AI Toolkit for self productivity",
+  "owner": {
+    "name": "Karun Siritheerathamrong",
+    "url": "https://github.com/karunsiri"
+  },
+  "plugins": [
+    {
+      "name": "productivity",
+      "source": "./plugins/productivity",
+      "description": "Create and resume AI session handoff documents to preserve context across sessions",
+      "category": "productivity"
+    },
+    {
+      "name": "engineering",
+      "source": "./plugins/engineering",
+      "description": "Engineering workflows — debugging. Customized for DevOps, Ruby, systems, cloud-native, and web app work.",
+      "category": "developer-tools"
+    }
+  ]
+}
