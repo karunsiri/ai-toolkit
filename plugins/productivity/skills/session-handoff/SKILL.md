@@ -32,15 +32,14 @@ Determine which mode applies:
 Run the smart scaffold script to create a pre-filled handoff document:
 
 ```bash
-HANDOFF_SCRIPTS="${CURSOR_PLUGIN_ROOT:+$CURSOR_PLUGIN_ROOT/productivity/skills/session-handoff/}scripts"
-bash "$HANDOFF_SCRIPTS/create_handoff.sh" [task-slug]
+bash scripts/create_handoff.sh [task-slug]
 ```
 
-Example: `bash "$HANDOFF_SCRIPTS/create_handoff.sh" implementing-user-auth`
+Example: `bash scripts/create_handoff.sh implementing-user-auth`
 
 **For continuation handoffs** (linking to previous work):
 ```bash
-bash "$HANDOFF_SCRIPTS/create_handoff.sh" "auth-part-2" --continues-from 2024-01-15-auth.md
+bash scripts/create_handoff.sh "auth-part-2" --continues-from 2024-01-15-auth.md
 ```
 
 The script will:
@@ -76,7 +75,7 @@ Follow the rules in [references/handoff-template-rule.md](references/handoff-tem
 Run the validation script to check completeness and security:
 
 ```bash
-bash "$HANDOFF_SCRIPTS/validate_handoff.sh" <handoff-file>
+bash scripts/validate_handoff.sh <handoff-file>
 ```
 
 The validator checks:
@@ -103,8 +102,7 @@ Report to user:
 List handoffs in the current project:
 
 ```bash
-HANDOFF_SCRIPTS="${CURSOR_PLUGIN_ROOT:+$CURSOR_PLUGIN_ROOT/productivity/skills/session-handoff/}scripts"
-bash "$HANDOFF_SCRIPTS/list_handoffs.sh"
+bash scripts/list_handoffs.sh
 ```
 
 This shows all handoffs with dates, titles, and completion status.
@@ -114,7 +112,7 @@ This shows all handoffs with dates, titles, and completion status.
 Before loading, check how current the handoff is:
 
 ```bash
-bash "$HANDOFF_SCRIPTS/check_staleness.sh" <handoff-file>
+bash scripts/check_staleness.sh <handoff-file>
 ```
 
 Staleness levels:
@@ -192,6 +190,8 @@ Example: `2024-01-15-143022-implementing-auth.md`
 ## Resources
 
 ### scripts/
+
+> **Note:** `scripts/` paths are relative to this skill's root directory, not the project workspace. Your agent resolves them from the skill install location.
 
 | Script | Purpose |
 |--------|---------|

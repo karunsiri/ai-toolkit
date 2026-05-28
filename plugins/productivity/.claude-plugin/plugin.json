@@ -1,6 +1,6 @@
 {
   "name": "productivity",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Create and resume AI session handoff documents to preserve context across sessions",
   "author": {
     "name": "Karun Siritheerathamrong"
