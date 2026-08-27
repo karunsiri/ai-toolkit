@@ -1,6 +1,6 @@
 {
   "name": "productivity",
-  "version": "0.3.1",
+  "version": "0.2.1",
   "description": "Create and resume session handoff documents that preserve project context across AI sessions.",
   "author": {
     "name": "Karun Siritheerathamrong",
