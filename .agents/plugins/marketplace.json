@@ -1,0 +1,20 @@
+{
+  "name": "ai-toolkit",
+  "interface": {
+    "displayName": "AI Toolkit"
+  },
+  "plugins": [
+    {
+      "name": "productivity",
+      "source": {
+        "source": "local",
+        "path": "./plugins/productivity"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

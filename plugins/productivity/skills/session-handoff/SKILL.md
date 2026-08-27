@@ -1,16 +1,15 @@
 ---
 name: session-handoff
-description: >
-  This skill should be used when the user wants to "create a handoff", "save state",
-  "save context", "context is getting full", "resume from handoff", "continue where
-  we left off", or "load handoff". Also triggers proactively after substantial work
-  (multiple file edits, complex debugging, architecture decisions) to suggest saving
-  context. Enables fresh agents to continue long-running work with zero ambiguity.
+description: Create or resume a project handoff document when the user asks to save or load session context, pause work, continue from a handoff, or check handoff staleness.
 ---
 
 # Handoff
 
 Creates comprehensive handoff documents that enable fresh AI agents to seamlessly continue work with zero ambiguity. Solves the long-running agent context exhaustion problem.
+
+## Script Location
+
+Before running any bundled script, set `SKILL_DIR` to the absolute directory that contains this `SKILL.md`. In Codex, use this skill's listed file path to determine that directory. All script commands below use `SKILL_DIR` so they work regardless of the project working directory.
 
 ## Mode Selection
 
@@ -32,14 +31,14 @@ Determine which mode applies:
 Run the smart scaffold script to create a pre-filled handoff document:
 
 ```bash
-bash scripts/create_handoff.sh [task-slug]
+bash "$SKILL_DIR/scripts/create_handoff.sh" [task-slug]
 ```
 
-Example: `bash scripts/create_handoff.sh implementing-user-auth`
+Example: `bash "$SKILL_DIR/scripts/create_handoff.sh" implementing-user-auth`
 
 **For continuation handoffs** (linking to previous work):
 ```bash
-bash scripts/create_handoff.sh "auth-part-2" --continues-from 2024-01-15-auth.md
+bash "$SKILL_DIR/scripts/create_handoff.sh" "auth-part-2" --continues-from 2024-01-15-auth.md
 ```
 
 The script will:
@@ -75,7 +74,7 @@ Follow the rules in [references/handoff-template-rule.md](references/handoff-tem
 Run the validation script to check completeness and security:
 
 ```bash
-bash scripts/validate_handoff.sh <handoff-file>
+bash "$SKILL_DIR/scripts/validate_handoff.sh" <handoff-file>
 ```
 
 The validator checks:
@@ -102,7 +101,7 @@ Report to user:
 List handoffs in the current project:
 
 ```bash
-bash scripts/list_handoffs.sh
+bash "$SKILL_DIR/scripts/list_handoffs.sh"
 ```
 
 This shows all handoffs with dates, titles, and completion status.
@@ -112,7 +111,7 @@ This shows all handoffs with dates, titles, and completion status.
 Before loading, check how current the handoff is:
 
 ```bash
-bash scripts/check_staleness.sh <handoff-file>
+bash "$SKILL_DIR/scripts/check_staleness.sh" <handoff-file>
 ```
 
 Staleness levels:
@@ -191,7 +190,7 @@ Example: `2024-01-15-143022-implementing-auth.md`
 
 ### scripts/
 
-> **Note:** `scripts/` paths are relative to this skill's root directory, not the project workspace. Your agent resolves them from the skill install location.
+> **Note:** `scripts/` paths are relative to this skill's root directory, not the project workspace. Set `SKILL_DIR` from this skill's location before running them.
 
 | Script | Purpose |
 |--------|---------|

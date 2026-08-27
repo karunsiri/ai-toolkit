@@ -1,0 +1,28 @@
+{
+  "name": "productivity",
+  "version": "0.3.1",
+  "description": "Create and resume session handoff documents that preserve project context across AI sessions.",
+  "author": {
+    "name": "Karun Siritheerathamrong",
+    "url": "https://github.com/karunsiri"
+  },
+  "homepage": "https://github.com/karunsiri/ai-toolkit/tree/main/plugins/productivity",
+  "repository": "https://github.com/karunsiri/ai-toolkit",
+  "license": "MIT",
+  "keywords": ["handoff", "context", "session", "memory"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Productivity",
+    "shortDescription": "Create and resume project handoffs",
+    "longDescription": "Preserve project state, decisions, and next steps in validated handoff documents that a fresh agent can resume.",
+    "developerName": "Karun Siritheerathamrong",
+    "category": "Productivity",
+    "capabilities": ["Write"],
+    "websiteURL": "https://github.com/karunsiri/ai-toolkit/tree/main/plugins/productivity",
+    "defaultPrompt": [
+      "Create a handoff for my current work.",
+      "Resume work from an existing handoff.",
+      "Check whether a handoff is still current."
+    ]
+  }
+}

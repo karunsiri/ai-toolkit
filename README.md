@@ -1,6 +1,6 @@
 # ai-toolkit
 
-Plugins for personal engineering productivity — compatible with Claude Code and Cursor. Covers session continuity and structured engineering workflows across DevOps, Ruby, systems, cloud-native, and web app work.
+Plugins for personal engineering productivity — compatible with Claude Code, Cursor, and Codex. Covers session continuity and structured engineering workflows across DevOps, Ruby, systems, cloud-native, and web app work.
 
 ## Installation
 
@@ -48,6 +48,20 @@ ln -s "$(pwd)/ai-toolkit/plugins/productivity" ~/.cursor/plugins/local/productiv
 
 Then verify in Cursor: Settings → Plugins → confirm both plugins appear.
 
+### Codex
+
+Codex compatibility currently starts with the Productivity plugin.
+
+```bash
+git clone https://github.com/karunsiri/ai-toolkit.git
+cd ai-toolkit
+
+codex plugin marketplace add .
+codex plugin add productivity@ai-toolkit
+```
+
+Start a new Codex conversation after installation. Invoke the skill explicitly with `$session-handoff`, or ask to create, load, or check a project handoff.
+
 ## Plugins
 
 ### [engineering](plugins/engineering)
@@ -79,6 +93,9 @@ claude plugin install productivity@karunsiri-ai-toolkit
 ## Structure
 
 ```
+.agents/
+└── plugins/
+    └── marketplace.json # Codex repository marketplace
 plugins/
 ├── engineering/          # Engineering workflows
 │   ├── .claude-plugin/
@@ -93,6 +110,8 @@ plugins/
 │       └── dbg/
 │           └── SKILL.md
 └── productivity/         # Session continuity
+    ├── .codex-plugin/
+    │   └── plugin.json   # Codex manifest
     ├── .claude-plugin/
     │   └── plugin.json   # Claude Code manifest
     ├── .cursor-plugin/
