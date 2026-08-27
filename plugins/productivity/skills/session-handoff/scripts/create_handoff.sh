@@ -41,7 +41,7 @@ mkdir -p "$HANDOFFS_DIR"
 if git rev-parse --git-dir > /dev/null 2>&1; then
   BRANCH=$(git branch --show-current)
   [[ -z "$BRANCH" ]] && BRANCH="[detached HEAD]"
-  COMMITS=$(git log --oneline -5 --no-decorate | sed 's/^/  - /')
+  COMMITS=$(git log --oneline -5 --no-decorate 2>/dev/null | sed 's/^/  - /' || true)
   [[ -z "$COMMITS" ]] && COMMITS="  - [no commits yet]"
   MODIFIED=$({ git diff --name-only; git diff --name-only --cached; } | sort -u)
 else
@@ -130,5 +130,5 @@ echo "Next steps:"
 echo "1. Open $FILEPATH"
 echo "2. Replace [TODO: ...] placeholders with actual content"
 echo "3. Focus especially on 'Important Context' and 'Immediate Next Steps'"
-echo "4. Run: bash scripts/validate_handoff.sh $FILEPATH"
+echo "4. Run: bash \"$SCRIPT_DIR/validate_handoff.sh\" \"$FILEPATH\""
 echo "   (Checks for completeness and accidental secrets)"
