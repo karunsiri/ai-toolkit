@@ -1,6 +1,6 @@
 {
   "name": "engineering",
-  "version": "0.1.1",
+  "version": "0.2.2",
   "description": "Engineering workflows — debugging. Customized for DevOps, Ruby, systems, cloud-native, and web app work.",
   "author": {
     "name": "Karun Siritheerathamrong"
