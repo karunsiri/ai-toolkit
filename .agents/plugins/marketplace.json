@@ -5,7 +5,7 @@
   },
   "plugins": [
     {
-      "name": "productivity",
+      "name": "ksproductivity",
       "source": {
         "source": "local",
         "path": "./plugins/productivity"
