@@ -7,13 +7,13 @@
   },
   "plugins": [
     {
-      "name": "productivity",
+      "name": "ksproductivity",
       "source": "./plugins/productivity",
       "description": "Create and resume AI session handoff documents to preserve context across sessions",
       "category": "productivity"
     },
     {
-      "name": "engineering",
+      "name": "ksengineering",
       "source": "./plugins/engineering",
       "description": "Engineering workflows — debugging. Customized for DevOps, Ruby, systems, cloud-native, and web app work.",
       "category": "developer-tools"
