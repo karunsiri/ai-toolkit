@@ -1,17 +1,17 @@
 ---
-name: dbg
+name: debug
 description: Structured debugging session — reproduce, isolate, diagnose, and fix. Trigger with an error message or stack trace, "this works in staging but not prod", "something broke after the deploy", or when behavior diverges from expected and the cause isn't obvious.
 argument-hint: "<error message or problem description>"
 ---
 
-# /dbg
+# /debug
 
 Run a structured debugging session. Four steps, strict order. No fix before reproduction. No hypothesis without evidence.
 
 ## Usage
 
 ```
-/dbg $ARGUMENTS
+/debug $ARGUMENTS
 ```
 
 ## What I Need From You
