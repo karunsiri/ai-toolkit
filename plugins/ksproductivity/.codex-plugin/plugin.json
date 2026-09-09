@@ -6,7 +6,7 @@
     "name": "Karun Siritheerathamrong",
     "url": "https://github.com/karunsiri"
   },
-  "homepage": "https://github.com/karunsiri/ai-toolkit/tree/main/plugins/productivity",
+  "homepage": "https://github.com/karunsiri/ai-toolkit/tree/main/plugins/ksproductivity",
   "repository": "https://github.com/karunsiri/ai-toolkit",
   "license": "MIT",
   "keywords": ["handoff", "context", "session", "memory"],
@@ -18,7 +18,7 @@
     "developerName": "Karun Siritheerathamrong",
     "category": "Productivity",
     "capabilities": ["Write"],
-    "websiteURL": "https://github.com/karunsiri/ai-toolkit/tree/main/plugins/productivity",
+    "websiteURL": "https://github.com/karunsiri/ai-toolkit/tree/main/plugins/ksproductivity",
     "defaultPrompt": [
       "Create a handoff for my current work.",
       "Resume work from an existing handoff.",

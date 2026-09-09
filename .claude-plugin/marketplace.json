@@ -10,13 +10,13 @@
     {
       "name": "ksproductivity",
       "description": "Creates comprehensive skill handoff documents enabling AI to continue work without ambiguity",
-      "source": "./plugins/productivity",
+      "source": "./plugins/ksproductivity",
       "category": "productivity"
     },
     {
       "name": "ksengineering",
       "description": "Engineering workflows — debugging. Customized for DevOps, Ruby, systems, cloud-native, and web app work.",
-      "source": "./plugins/engineering",
+      "source": "./plugins/ksengineering",
       "category": "engineering"
     }
   ],

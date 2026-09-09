@@ -8,7 +8,7 @@
       "name": "ksproductivity",
       "source": {
         "source": "local",
-        "path": "./plugins/productivity"
+        "path": "./plugins/ksproductivity"
       },
       "policy": {
         "installation": "AVAILABLE",

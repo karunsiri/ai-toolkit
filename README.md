@@ -42,8 +42,8 @@ git clone https://github.com/karunsiri/ai-toolkit.git
 
 # Symlink plugins into Cursor's local plugin directory
 mkdir -p ~/.cursor/plugins/local
-ln -s "$(pwd)/ai-toolkit/plugins/engineering" ~/.cursor/plugins/local/ksengineering
-ln -s "$(pwd)/ai-toolkit/plugins/productivity" ~/.cursor/plugins/local/ksproductivity
+ln -s "$(pwd)/ai-toolkit/plugins/ksengineering" ~/.cursor/plugins/local/ksengineering
+ln -s "$(pwd)/ai-toolkit/plugins/ksproductivity" ~/.cursor/plugins/local/ksproductivity
 ```
 
 Then verify in Cursor: Settings → Plugins → confirm both plugins appear.
@@ -64,7 +64,7 @@ Start a new Codex conversation after installation. Invoke the skill explicitly w
 
 ## Plugins
 
-### [engineering](plugins/engineering)
+### [ksengineering](plugins/ksengineering)
 
 Structured engineering workflows — debugging, code review, architecture decisions, incident response, and technical documentation.
 
@@ -78,7 +78,7 @@ Works standalone or with connected tools (GitHub, Linear, Datadog, PagerDuty).
 claude plugin install ksengineering@karunsiri-ai-toolkit
 ```
 
-### [Productivity](plugins/productivity)
+### [Productivity](plugins/ksproductivity)
 
 Create and resume session handoff documents so a fresh agent can continue long-running work with zero ambiguity.
 
@@ -97,7 +97,7 @@ claude plugin install ksproductivity@karunsiri-ai-toolkit
 └── plugins/
     └── marketplace.json # Codex repository marketplace
 plugins/
-├── engineering/          # Engineering workflows
+├── ksengineering/        # Engineering workflows
 │   ├── .claude-plugin/
 │   │   └── plugin.json   # Claude Code manifest
 │   ├── .cursor-plugin/
@@ -109,7 +109,7 @@ plugins/
 │   └── skills/
 │       └── debug/
 │           └── SKILL.md
-└── productivity/         # Session continuity
+└── ksproductivity/       # Session continuity
     ├── .codex-plugin/
     │   └── plugin.json   # Codex manifest
     ├── .claude-plugin/
