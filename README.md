@@ -12,8 +12,8 @@ Plugins for personal engineering productivity — compatible with Claude Code, C
 claude plugin marketplace add karunsiri/ai-toolkit
 
 # Install plugins
-claude plugin install engineering@karunsiri-ai-toolkit
-claude plugin install productivity@karunsiri-ai-toolkit
+claude plugin install ksengineering@karunsiri-ai-toolkit
+claude plugin install ksproductivity@karunsiri-ai-toolkit
 ```
 
 #### From cloned source
@@ -23,8 +23,8 @@ git clone https://github.com/karunsiri/ai-toolkit.git
 claude plugin marketplace add ./ai-toolkit
 
 # Install plugins
-claude plugin install engineering@karunsiri-ai-toolkit
-claude plugin install productivity@karunsiri-ai-toolkit
+claude plugin install ksengineering@karunsiri-ai-toolkit
+claude plugin install ksproductivity@karunsiri-ai-toolkit
 ```
 
 Scope options: `--scope user` (default), `--scope project` (shared with team), `--scope local` (gitignored).
@@ -42,8 +42,8 @@ git clone https://github.com/karunsiri/ai-toolkit.git
 
 # Symlink plugins into Cursor's local plugin directory
 mkdir -p ~/.cursor/plugins/local
-ln -s "$(pwd)/ai-toolkit/plugins/engineering" ~/.cursor/plugins/local/engineering
-ln -s "$(pwd)/ai-toolkit/plugins/productivity" ~/.cursor/plugins/local/productivity
+ln -s "$(pwd)/ai-toolkit/plugins/engineering" ~/.cursor/plugins/local/ksengineering
+ln -s "$(pwd)/ai-toolkit/plugins/productivity" ~/.cursor/plugins/local/ksproductivity
 ```
 
 Then verify in Cursor: Settings → Plugins → confirm both plugins appear.
@@ -57,7 +57,7 @@ git clone https://github.com/karunsiri/ai-toolkit.git
 cd ai-toolkit
 
 codex plugin marketplace add .
-codex plugin add productivity@ai-toolkit
+codex plugin add ksproductivity@ai-toolkit
 ```
 
 Start a new Codex conversation after installation. Invoke the skill explicitly with `$session-handoff`, or ask to create, load, or check a project handoff.
@@ -70,12 +70,12 @@ Structured engineering workflows — debugging, code review, architecture decisi
 
 | Command | Description |
 |---|---|
-| `/dbg` | Reproduce, isolate, diagnose, and fix bugs across any stack |
+| `/debug` | Reproduce, isolate, diagnose, and fix bugs across any stack |
 
 Works standalone or with connected tools (GitHub, Linear, Datadog, PagerDuty).
 
 ```bash
-claude plugin install engineering@karunsiri-ai-toolkit
+claude plugin install ksengineering@karunsiri-ai-toolkit
 ```
 
 ### [Productivity](plugins/productivity)
@@ -87,7 +87,7 @@ Create and resume session handoff documents so a fresh agent can continue long-r
 | `/session-handoff` | Create or resume a handoff document |
 
 ```bash
-claude plugin install productivity@karunsiri-ai-toolkit
+claude plugin install ksproductivity@karunsiri-ai-toolkit
 ```
 
 ## Structure
@@ -107,7 +107,7 @@ plugins/
 │   ├── CONNECTORS.md
 │   ├── README.md
 │   └── skills/
-│       └── dbg/
+│       └── debug/
 │           └── SKILL.md
 └── productivity/         # Session continuity
     ├── .codex-plugin/
