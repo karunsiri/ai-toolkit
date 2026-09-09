@@ -1,5 +1,6 @@
 {
   "name": "ksengineering",
+  "displayName": "KSEngineering",
   "version": "0.2.0",
   "description": "Engineering workflows — debugging. Customized for DevOps, Ruby, systems, cloud-native, and web app work.",
   "author": {

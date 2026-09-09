@@ -1,5 +1,6 @@
 {
   "name": "ksproductivity",
+  "displayName": "KSProductivity",
   "version": "0.2.2",
   "description": "Create and resume AI session handoff documents to preserve context across sessions",
   "author": {
