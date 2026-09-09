@@ -12,7 +12,7 @@
   "keywords": ["handoff", "context", "session", "memory"],
   "skills": "./skills/",
   "interface": {
-    "displayName": "Productivity",
+    "displayName": "KSProductivity",
     "shortDescription": "Create and resume project handoffs",
     "longDescription": "Preserve project state, decisions, and next steps in validated handoff documents that a fresh agent can resume.",
     "developerName": "Karun Siritheerathamrong",
