@@ -1,0 +1,28 @@
+{
+  "name": "ksengineering",
+  "version": "0.3.0",
+  "description": "Engineering workflows — structured debugging and risk-first planning. Customized for DevOps, Ruby, systems, cloud-native, and web app work.",
+  "author": {
+    "name": "Karun Siritheerathamrong",
+    "url": "https://github.com/karunsiri"
+  },
+  "homepage": "https://github.com/karunsiri/ai-toolkit/tree/main/plugins/ksengineering",
+  "repository": "https://github.com/karunsiri/ai-toolkit",
+  "license": "MIT",
+  "keywords": ["debug", "planning", "engineering", "devops", "ruby", "cloud", "incident", "review"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "KSEngineering",
+    "shortDescription": "Structured debugging and risk-first planning",
+    "longDescription": "Senior-engineer workflows: reproduce-isolate-diagnose-fix debugging, and risk-first phased implementation planning that kills unknowns early. Tuned for DevOps, Ruby, systems, cloud-native, and web app work.",
+    "developerName": "Karun Siritheerathamrong",
+    "category": "Developer Tools",
+    "capabilities": ["Read", "Write", "Bash"],
+    "websiteURL": "https://github.com/karunsiri/ai-toolkit/tree/main/plugins/ksengineering",
+    "defaultPrompt": [
+      "Debug this error for me.",
+      "Plan the implementation for this feature.",
+      "Break this migration into phases."
+    ]
+  }
+}
