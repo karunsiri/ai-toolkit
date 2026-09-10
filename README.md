@@ -50,17 +50,16 @@ Then verify in Cursor: Settings → Plugins → confirm both plugins appear.
 
 ### Codex
 
-Codex compatibility currently starts with the Productivity plugin.
-
 ```bash
 git clone https://github.com/karunsiri/ai-toolkit.git
 cd ai-toolkit
 
 codex plugin marketplace add .
+codex plugin add ksengineering@ai-toolkit
 codex plugin add ksproductivity@ai-toolkit
 ```
 
-Start a new Codex conversation after installation. Invoke the skill explicitly with `$session-handoff`, or ask to create, load, or check a project handoff.
+Start a new Codex conversation after installation. Invoke a skill explicitly (`$debug`, `$planning`, `$session-handoff`), or ask in plain language — e.g. debug an error, plan a feature, or create/load/check a project handoff.
 
 ## Plugins
 
@@ -99,6 +98,8 @@ claude plugin install ksproductivity@karunsiri-ai-toolkit
     └── marketplace.json # Codex repository marketplace
 plugins/
 ├── ksengineering/        # Engineering workflows
+│   ├── .codex-plugin/
+│   │   └── plugin.json   # Codex manifest
 │   ├── .claude-plugin/
 │   │   └── plugin.json   # Claude Code manifest
 │   ├── .cursor-plugin/
@@ -108,7 +109,9 @@ plugins/
 │   ├── CONNECTORS.md
 │   ├── README.md
 │   └── skills/
-│       └── debug/
+│       ├── debug/
+│       │   └── SKILL.md
+│       └── planning/
 │           └── SKILL.md
 └── ksproductivity/       # Session continuity
     ├── .codex-plugin/
