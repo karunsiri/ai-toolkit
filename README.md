@@ -70,6 +70,7 @@ Structured engineering workflows — debugging, code review, architecture decisi
 
 | Command | Description |
 |---|---|
+| `/planning` | Risk-first phased implementation plan — walking skeleton first, spikes for unknowns, no estimates |
 | `/debug` | Reproduce, isolate, diagnose, and fix bugs across any stack |
 
 Works standalone or with connected tools (GitHub, Linear, Datadog, PagerDuty).
