@@ -1,7 +1,7 @@
 ---
 name: address-reviews
 description: Agentic loop that works a pull request's review feedback to zero. Fetches open review threads and comments, classifies them (must-fix / should-fix / optional / false-positive), shows a colored summary before touching code, applies fixes, replies in-thread, optionally resolves, re-requests bot review, waits for the async re-review to finish, works its new comments, and repeats until the bot goes quiet. Trigger with "/address-reviews", "address the PR comments", "handle the review feedback", "fix the Copilot/CodeRabbit/ox-security comments", or when a PR has open review threads to work through. Do NOT trigger when the user wants to author a fresh review of someone else's PR.
-argument-hint: "[--high|--xhigh] [--bot-only] [--resolve]"
+argument-hint: "[--high|--xhigh] [--bot-only] [--resolve] [--include-suppressed]"
 ---
 
 # /address-reviews
@@ -13,7 +13,7 @@ Bot re-review is asynchronous: after a fix the bot takes a while to re-scan, and
 ## Usage
 
 ```
-/address-reviews [--high|--xhigh] [--bot-only] [--resolve]
+/address-reviews [--high|--xhigh] [--bot-only] [--resolve] [--include-suppressed]
 ```
 
 | Flag | Meaning | Default |
@@ -22,6 +22,7 @@ Bot re-review is asynchronous: after a fix the bot takes a while to re-scan, and
 | `--xhigh` | Run the thinker at max effort. Wins over `--high` if both given | off |
 | `--bot-only` | Only address comments from bots/automated agents (Copilot, CodeRabbit, Dependabot, ox-security, Sonar, etc.). Skip human reviewers | off (all) |
 | `--resolve` | Resolve a thread after its fix is pushed | off (leave open) |
+| `--include-suppressed` | Also fetch and fix a bot's suppressed / low-confidence comments (e.g. Copilot's `Comments suppressed due to low confidence` block) | off (skip suppressed) |
 
 No effort flag means the thinker uses its configured model, and if none is configured, the current session model. See [references/models.md](references/models.md) for the per-tool model matrix and how each effort maps to a model.
 
@@ -41,7 +42,7 @@ The Poller is active **only for bots/automated agents** (review bots and scanner
 
 ### 0. Resolve target and parse flags
 
-- Parse `$ARGUMENTS` for the four flags. `--xhigh` overrides `--high`.
+- Parse `$ARGUMENTS` for the five flags. `--xhigh` overrides `--high`.
 - Find the PR for the current branch via `~~source control`. If none, or several, ask which PR.
 - **Thinker floor check.** Resolve the thinker model (effort flag → configured model → session model). If it lands on a fast/small tier (Haiku, `gpt-5-mini`, or the tool's small default) with no effort flag raising it, the thinker would be doing code judgment on a model built for data shuttling. Warn and confirm before proceeding, offering to: (a) run anyway as a fast, lower-confidence pass; (b) re-run with `--high` / `--xhigh`; or (c) raise the session or configured model. If no user is available to answer (unattended loop), proceed but mark the run low-confidence: auto-apply only unambiguous must-fix, and list should-fix / optional for review instead of changing them. The fetcher and poller on a small tier need no warning; only the thinker does.
 - Confirm the effort and mode you resolved in one line, e.g. `PR #142 | effort: high | thinker: Opus 5 | scope: bots only | resolve: on`.
@@ -55,6 +56,8 @@ Pull, for the target PR:
 - The latest check runs / workflow runs and their authors.
 
 Drop resolved threads and threads whose last reply is already yours. If `--bot-only`, keep only bot-authored items. Return a normalized list: `{id, thread_id (or none), author, is_bot, file, line, quote, body}`. Nothing is edited in this step.
+
+**Drop suppressed / low-confidence bot comments by default.** Some bots surface only their high-confidence findings and hide the rest. Copilot posts suppressed ones inside a collapsed block in its review body (worded like `Comments suppressed due to low confidence (N)`, often a `<details>` section) rather than as real inline threads. These are the bot's own "not worth surfacing" bucket: they have no thread to reply to or resolve, and a high false-positive rate. Without `--include-suppressed`, do **not** parse them into items and do **not** act on them; fetch only comments the bot actually surfaced (published inline review threads and the non-suppressed body). With `--include-suppressed`, parse the suppressed block too and tag each item `suppressed: true` so the Thinker classifies it against current code like any other comment; since there is no thread to reply in, route replies for these to a standalone @-mention comment per step 5's no-thread fallback.
 
 ### 2. Classify (Thinker)
 
@@ -166,6 +169,7 @@ Treat an author as a bot when the login ends in `[bot]`, the account type is `Bo
 - Show the grouped summary **before** the first code change, every iteration.
 - One bucket per item. Judge against current code, not the stale diff.
 - Never edit code for a false positive; reply instead.
+- Do not pull or act on a bot's suppressed / low-confidence comments (e.g. Copilot's `Comments suppressed due to low confidence` block) unless `--include-suppressed` is set. They are hidden by the bot on purpose and have no thread to close; fetch only surfaced review threads by default.
 - Never skip, disable, or quarantine a test to make a check pass. Never push an empty commit to kick CI.
 - Do not widen a PR beyond what the comments ask; float larger refactors as a reply, do not silently perform them.
 - The Poller returns results only. All fixes go through the Thinker.
