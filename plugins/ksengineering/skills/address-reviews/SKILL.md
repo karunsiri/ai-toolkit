@@ -1,14 +1,14 @@
 ---
 name: address-reviews
-description: Agentic loop that works a pull request's review feedback to zero. Fetches open review threads and comments, classifies them (must-fix / should-fix / optional / false-positive), shows a colored summary before touching code, applies fixes, replies in-thread, optionally resolves, re-requests bot review, watches bot CI for new comments, and repeats. Trigger with "/address-reviews", "address the PR comments", "handle the review feedback", "fix the Copilot/CodeRabbit/ox-security comments", or when a PR has open review threads to work through. Do NOT trigger when the user wants to author a fresh review of someone else's PR.
+description: Agentic loop that works a pull request's review feedback to zero. Fetches open review threads and comments, classifies them (must-fix / should-fix / optional / false-positive), shows a colored summary before touching code, applies fixes, replies in-thread, optionally resolves, re-requests bot review, waits for the async re-review to finish, works its new comments, and repeats until the bot goes quiet. Trigger with "/address-reviews", "address the PR comments", "handle the review feedback", "fix the Copilot/CodeRabbit/ox-security comments", or when a PR has open review threads to work through. Do NOT trigger when the user wants to author a fresh review of someone else's PR.
 argument-hint: "[--high|--xhigh] [--bot-only] [--resolve]"
 ---
 
 # /address-reviews
 
-Drive a pull request's review feedback to zero in a loop. Fetch, classify, show the summary, fix, reply, re-request, watch CI, repeat. Cheap models do the fetching and polling; the configured model does the thinking and the code.
+Drive a pull request's review feedback to zero in a loop. Fetch, classify, show the summary, fix, reply, re-request, wait for the bot's next pass, repeat. Cheap models do the fetching and polling; the configured model does the thinking and the code.
 
-The loop stops when no actionable comment remains and the bots have nothing new to say, or when the user stops it.
+Bot re-review is asynchronous: after a fix the bot takes a while to re-scan, and its comments appear only when that pass completes. The loop re-requests the bot, waits for the completion signal, addresses whatever comes back, and keeps going until the bot completes a pass with nothing new to say (or a loop guard trips, or the user stops it).
 
 ## Usage
 
@@ -33,9 +33,9 @@ Three roles, each on the cheapest model that can do its job. On Claude Code, spa
 |------|-----|--------|-------|
 | **Fetcher** | Discover the target PR, pull open review threads + comments + check runs, tag each item as bot or human, return a normalized list | read-only | cheapest / fastest available |
 | **Thinker** | Classify each item, write the summary, implement fixes, draft replies | read + write | configured, else session model; raised by `--high` / `--xhigh` |
-| **Poller** | After a push, watch bot/automated check runs and actions, return only the run result (pass/fail + failure head) | read-only | cheapest / fastest available |
+| **Poller** | After a push, wait for re-requested bots to finish an async re-review, return only each bot's completion state (and failure head) | read-only | cheapest / fastest available |
 
-The Poller is active **only for CI runs from bots/automated agents** (review bots and scanners that post further comments). It reports the result; the next iteration's fixes go to the Thinker, never the Poller.
+The Poller is active **only for bots/automated agents** (review bots and scanners that re-review and post further comments). It waits for the completion signal, reports state, and never reads or fixes code — the next iteration's fixes go to the Thinker.
 
 ## The Loop
 
@@ -103,7 +103,7 @@ For every item you acted on or dismissed:
 
 - **Reply in the thread it came from** — never as a standalone comment. Use the review-comment reply path so the reply nests under the original.
 - **No thread available** (a plain PR/issue comment or a review body with no inline thread) → post one comment that **@-mentions the commenter** so it still routes to them.
-- One reply per item. Keep it short, technical, no em-dash: state the what, not the why. `Fixed: compare TTL in seconds.` / `Added timeout regression test in spec/api_spec.rb.` / `Not a secret — TTL_ENV is the variable name; left as is.`
+- One reply per item. Keep it short, technical, no em-dash: state the what, not the why. `Fixed: compare TTL in seconds.` / `Added timeout regression test in spec/api_spec.rb.` / `Not a secret: TTL_ENV is the variable name, left as is.`
 - With `--resolve`: resolve a thread once its fix is pushed. Resolve a false-positive thread only after replying with the reason. Leave a must-fix you could not resolve **open**, and say why in the reply. Without `--resolve`, reply only and leave every thread open.
 
 ### 6. Commit and push
@@ -112,19 +112,42 @@ Commit the batch with a short, technical message (what, not why, no em-dash), th
 
 ### 7. Re-request review
 
-- Re-request the bot reviewers that support it (e.g. Copilot) so they re-scan the new head.
+- Re-request every bot reviewer that supports it so it re-scans the new head. Copilot must be re-requested explicitly after each push (it does not re-review on its own). Check/scanner bots (CodeRabbit, ox-security, Sonar, Snyk, Semgrep) usually re-run on push; trigger the ones that do not.
+- Record, per bot, the head SHA and the timestamp you re-requested at. This is the baseline step 8 uses to tell a fresh pass from a stale one.
 - Re-request a human reviewer only when their thread was `changes-requested` and you addressed it.
-- Trigger any re-runnable bot checks/scanners the push does not start on its own.
 
-### 8. Watch bot CI (Poller)
+### 8. Wait for the bot to finish, then read its new pass (Poller)
 
-Prefer an event subscription if the tool offers one (Claude Code's PR activity subscription wakes the session on new comments and check results — use it and end the turn instead of spinning). Otherwise the Poller watches the bot/automated check runs and actions from step 7 until they finish, then returns only their result and, if failed, the failure head.
+Bot re-review is **asynchronous and slow**. Copilot and scanners take from tens of seconds to many minutes depending on diff size and code complexity, and comments appear only when the pass completes. Do not read comments right after step 7 and call the bot clean — an empty result almost always means "not started yet," not "no suggestions."
 
-New bot comments or a bot check that posts findings → feed them back to step 1 and loop. A red **required** check that your change caused is in scope to fix; a failure unrelated to the diff is reported, not chased here (that is `/babysit` territory).
+The Poller watches for each re-requested bot's **completion signal**, not for comments:
+
+- **Review-type bots (Copilot):** done when a review by that bot appears whose submitted-at is after your step-7 timestamp **and** the bot is no longer in the PR's requested/pending-reviewer list. Until both hold, it is still working.
+- **Check-type bots (CodeRabbit, ox-security, Sonar, Snyk, Semgrep):** done when the bot's check run / action for the current head SHA reaches a completed conclusion (`success` / `failure` / `neutral`). A queued or in-progress run is still working.
+
+Poll with backoff so the cheap model is not spinning: start ~20-30s, roughly double up to a ~2-3 min ceiling, with an overall per-bot timeout (default ~15 min). On Claude Code, prefer the PR activity subscription and **end the turn** — the completed-review or check event wakes the session and re-enters step 1; do not sleep-poll when a subscription is available.
+
+The Poller returns only, per bot: `state` ∈ { working, done-clean, done-with-comments, timed-out } and, for check-type failures, the failure head.
+
+- **done-with-comments** → feed the new comments to step 1 and loop.
+- **done-clean** → that bot is satisfied; stop re-requesting it.
+- **timed-out** → report it and move on. Never treat a timeout as clean.
+
+A red **required** check your change caused is in scope to fix; a failure unrelated to the diff is reported, not chased here (that is `/babysit` territory).
 
 ### 9. Repeat or finish
 
-Loop steps 1-8 until: no actionable item remains, `--bot-only` scope is clean, and the watched bots have posted nothing new. Then report a final tally: items fixed, replied, resolved, and anything left open with the reason.
+Re-enter step 1 whenever a bot came back **done-with-comments** or a human posted new feedback. Keep the fix → reply → push → re-request → wait cycle going per bot.
+
+A bot is **finished** only when it completed a fresh pass (step 8 confirmed the completion signal) that produced zero new suggestions — never because comments had simply not appeared yet. Stop when, for every in-scope reviewer, the last completed pass produced nothing new, `--bot-only` scope is clean, and no thread is left waiting on you.
+
+**Loop guards** — do not spin forever:
+
+- If a bot re-posts a suggestion you already addressed, reply once pointing to the resolution and stop re-requesting it. Do not re-fix.
+- Cap re-review rounds per bot (default 5). At the cap, summarize what the bot still wants and hand back to the user.
+- Make progress or stop: if a round changes no code and resolves no thread, do not re-request again.
+
+Then report a final tally: items fixed, replied, resolved, bots that went quiet, and anything left open or timed-out with the reason.
 
 ## Bot detection
 
@@ -145,6 +168,8 @@ Treat an author as a bot when the login ends in `[bot]`, the account type is `Bo
 - Never skip, disable, or quarantine a test to make a check pass. Never push an empty commit to kick CI.
 - Do not widen a PR beyond what the comments ask; float larger refactors as a reply, do not silently perform them.
 - The Poller returns results only. All fixes go through the Thinker.
+- Never call a re-requested bot clean until its completion signal fired for the current head. An empty read before then is "still working," not "no suggestions."
+- Never re-fix a suggestion the bot re-posts after you addressed it; reply once and stop re-requesting that bot.
 - Stop immediately when the user says stop.
 
 ## If Connectors Available
