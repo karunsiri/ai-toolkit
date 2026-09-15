@@ -43,7 +43,8 @@ The Poller is active **only for bots/automated agents** (review bots and scanner
 
 - Parse `$ARGUMENTS` for the four flags. `--xhigh` overrides `--high`.
 - Find the PR for the current branch via `~~source control`. If none, or several, ask which PR.
-- Confirm the effort and mode you resolved in one line, e.g. `PR #142 | effort: high | scope: bots only | resolve: on`.
+- **Thinker floor check.** Resolve the thinker model (effort flag → configured model → session model). If it lands on a fast/small tier (Haiku, `gpt-5-mini`, or the tool's small default) with no effort flag raising it, the thinker would be doing code judgment on a model built for data shuttling. Warn and confirm before proceeding, offering to: (a) run anyway as a fast, lower-confidence pass; (b) re-run with `--high` / `--xhigh`; or (c) raise the session or configured model. If no user is available to answer (unattended loop), proceed but mark the run low-confidence: auto-apply only unambiguous must-fix, and list should-fix / optional for review instead of changing them. The fetcher and poller on a small tier need no warning; only the thinker does.
+- Confirm the effort and mode you resolved in one line, e.g. `PR #142 | effort: high | thinker: Opus 5 | scope: bots only | resolve: on`.
 
 ### 1. Fetch (Fetcher)
 
@@ -168,6 +169,7 @@ Treat an author as a bot when the login ends in `[bot]`, the account type is `Bo
 - Never skip, disable, or quarantine a test to make a check pass. Never push an empty commit to kick CI.
 - Do not widen a PR beyond what the comments ask; float larger refactors as a reply, do not silently perform them.
 - The Poller returns results only. All fixes go through the Thinker.
+- Never silently run the Thinker on the fetch/poll tier. If it resolves to a fast/small model with no effort flag, warn and confirm, or degrade autonomy when unattended (step 0).
 - Never call a re-requested bot clean until its completion signal fired for the current head. An empty read before then is "still working," not "no suggestions."
 - Never re-fix a suggestion the bot re-posts after you addressed it; reply once and stop re-requesting that bot.
 - Stop immediately when the user says stop.

@@ -22,6 +22,10 @@ The **fetcher** and **poller** always take the cheapest, fastest model available
 
 Model IDs are current examples, not pins. If an ID is unavailable in the running tool, fall to the nearest tier: cheapest-available for fetcher/poller, most-capable-available for the thinker.
 
+## Thinker floor
+
+The thinker does the judgment work — classifying comments and writing fixes — so it should not run on the fetch/poll tier. If the resolved thinker model lands on a fast/small model (Haiku, `gpt-5-mini`, or the tool's small default) with no effort flag raising it (for example, a Haiku session invoked with no `--high`/`--xhigh`), warn and confirm before proceeding. Options: run anyway as a fast, lower-confidence pass; re-run with `--high`/`--xhigh`; or raise the session/configured model. Unattended, proceed low-confidence — auto-apply only unambiguous must-fix and list the rest. The fetcher and poller on a small tier are expected and need no warning.
+
 ## How each tool runs the roles
 
 **Claude Code** — spawn each role as a subagent (Task tool) with the `model` set from the matrix. Real subagents keep the fetcher/poller output out of the thinker's context, which is where the token savings come from. Map effort to reasoning with the usual keywords (`think hard` for `--high`, `ultrathink` for `--xhigh`). For step 8, prefer the PR activity subscription over an active poll loop.
