@@ -59,7 +59,7 @@ codex plugin add ksengineering@ai-toolkit
 codex plugin add ksproductivity@ai-toolkit
 ```
 
-Start a new Codex conversation after installation. Invoke a skill explicitly (`$debug`, `$planning`, `$session-handoff`), or ask in plain language — e.g. debug an error, plan a feature, or create/load/check a project handoff.
+Start a new Codex conversation after installation. Invoke a skill explicitly (`$debug`, `$planning`, `$address-reviews`, `$session-handoff`), or ask in plain language — e.g. debug an error, plan a feature, address PR review comments, or create/load/check a project handoff.
 
 ## Plugins
 
@@ -71,6 +71,7 @@ Structured engineering workflows — debugging, code review, architecture decisi
 |---|---|
 | `/planning` | Risk-first phased implementation plan — walking skeleton first, spikes for unknowns, no estimates |
 | `/debug` | Reproduce, isolate, diagnose, and fix bugs across any stack |
+| `/address-reviews` | Agentic loop that addresses PR review feedback — classify, fix, reply in-thread, resolve, re-request bot review, watch bot CI, repeat |
 
 Works standalone or with connected tools (GitHub, Linear, Datadog, PagerDuty).
 
@@ -109,6 +110,9 @@ plugins/
 │   ├── CONNECTORS.md
 │   ├── README.md
 │   └── skills/
+│       ├── address-reviews/
+│       │   ├── SKILL.md
+│       │   └── references/
 │       ├── debug/
 │       │   └── SKILL.md
 │       └── planning/
