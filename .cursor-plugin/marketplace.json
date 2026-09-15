@@ -15,7 +15,7 @@
     {
       "name": "ksengineering",
       "source": "./plugins/ksengineering",
-      "description": "Engineering workflows — debugging. Customized for DevOps, Ruby, systems, cloud-native, and web app work.",
+      "description": "Engineering workflows — debugging, planning, and PR review handling. Customized for DevOps, Ruby, systems, cloud-native, and web app work.",
       "category": "developer-tools"
     }
   ]

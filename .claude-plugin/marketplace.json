@@ -15,7 +15,7 @@
     },
     {
       "name": "ksengineering",
-      "description": "Engineering workflows — debugging and risk-first planning. Customized for DevOps, Ruby, systems, cloud-native, and web app work.",
+      "description": "Engineering workflows — debugging, risk-first planning, and PR review handling. Customized for DevOps, Ruby, systems, cloud-native, and web app work.",
       "source": "./plugins/ksengineering",
       "category": "engineering"
     }
