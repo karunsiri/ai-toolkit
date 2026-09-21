@@ -72,7 +72,7 @@ Cross-reference against the **debug ledger** (see below). Every new hypothesis m
 
 ## Debug Ledger
 
-Maintain a running record of every experiment in `.claude/debug-sessions/{session_name}.md`.
+Maintain a running record of every experiment in `.agents/debug-sessions/{session_name}.md`.
 
 Session name: slug from the issue, e.g. `auth-timeout-2026-05-21`.
 
