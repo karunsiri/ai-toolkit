@@ -152,6 +152,15 @@ These are the handoff — another session or teammate executes from them.
 
 Update the checkboxes and the decision log as work proceeds.
 
+## Turn Summary
+
+Long planning conversations lose track of `plan.md` and `tasks.md` under many turns of questions, decisions, and edits. Keep them visible:
+
+- **Any turn that edits `plan.md` or `tasks.md`** — end the reply with a one-line pointer to both, as markdown links (they render as clickable file-preview links): `Plan files: [plan.md](path), [tasks.md](path)`.
+- **No edit this turn, but 5+ turns since the last pointer** — emit the same line anyway. Long stretches of discussion without a file touch are exactly when the artifacts go missing from view.
+
+Don't repeat this line every single turn if nothing changed and the last pointer was recent — that's noise, not signal.
+
 ## Operating Rules
 
 - Do not produce a plan before goal, non-goals, success criteria, and constraints are all pinned. Missing one → interrogate, don't guess.
