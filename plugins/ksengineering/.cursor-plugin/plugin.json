@@ -7,5 +7,6 @@
   "repository": "https://github.com/karunsiri/ai-toolkit",
   "keywords": ["debug", "planning", "engineering", "review"],
   "category": "developer-tools",
-  "skills": "./skills/"
+  "skills": "./skills/",
+  "agents": "./agents-cursor/"
 }

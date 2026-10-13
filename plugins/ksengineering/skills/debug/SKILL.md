@@ -53,6 +53,8 @@ Narrow down the component, service, or code path. Try in this order — escalate
 
 Also check: recent deploys, config changes, dependency updates, and anything that correlates with when the issue started.
 
+**Tier: light** for the searching in this step: finding the code path, every place a knob is read, recent commits on the affected files, log lines around the failure. Hand each narrow question to the light tier (`ks-scout` on Claude Code and Cursor, a low-effort pass on Codex) and keep only its compact answer (`file:line`, counts, exact lines). Reading the results and deciding what to try next stays in the session. See [model tiers](../../references/model-tiers.md).
+
 ### 3. Diagnose
 
 Generate **2–4 ranked hypotheses**. Not one. Single-hypothesis thinking anchors on the first plausible idea.
