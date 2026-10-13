@@ -1,39 +1,23 @@
 # Model selection
 
-Which model each role runs on, per tool. The goal: cheap and fast for fetch and poll (they only shuttle structured data), your best judgment for the thinker (it reads code and writes it).
+Tiers, model names and per-tool mechanics live in the shared [model tiers](../../../references/model-tiers.md). This file only maps this skill's roles and flags onto those tiers.
 
-The **thinker** uses its configured model if one is set, otherwise the current session model. The effort flags override that with a stronger model and more reasoning:
+## Roles
 
-- no flag → configured model, else session model
-- `--high` → stronger model, high reasoning
-- `--xhigh` → strongest available, max reasoning (falls back to `--high` if a tool has no higher tier)
+| Role | Tier | Claude Code | Cursor | Codex |
+|------|------|-------------|--------|-------|
+| Fetcher | light | `ks-scout` | `ks-scout` (`inherit`) | low-effort pass |
+| Poller | light | `ks-scout` | `ks-scout` (`inherit`) | low-effort pass |
+| Thinker | standard (default) | `ks-builder` | `ks-builder` (`inherit`) | session model, `model_reasoning_effort=medium` |
+| Thinker, `--high` | deep | `ks-thinker` | `ks-thinker` (`inherit`); pick a strong model | strongest model, `model_reasoning_effort=high` |
+| Thinker, `--xhigh` | deep, max | `ks-thinker`, spawned with effort `max` | `ks-thinker` (`inherit`); pick the strongest model | strongest model, `model_reasoning_effort=xhigh` (else `high`) |
 
-The **fetcher** and **poller** always take the cheapest, fastest model available regardless of effort — raising effort never raises their model.
-
-## Matrix
-
-| Role | Claude Code | Codex | Cursor |
-|------|-------------|-------|--------|
-| Fetcher | Haiku (`claude-haiku-4-5`) | `gpt-5-mini` (or `gpt-5-codex-mini`), reasoning low | fast tier (Haiku / `gpt-5-mini`) |
-| Poller | Haiku (`claude-haiku-4-5`) | `gpt-5-mini`, reasoning low | fast tier (Haiku / `gpt-5-mini`) |
-| Thinker (default) | session model (Sonnet, `claude-sonnet-5`) | `gpt-5-codex`, reasoning medium | Cursor Auto / Sonnet |
-| Thinker (`--high`) | Opus (`claude-opus-5`), think hard | `gpt-5-codex`, reasoning high | Opus / GPT-5, high |
-| Thinker (`--xhigh`) | Opus (`claude-opus-5`), ultrathink | `gpt-5-codex`, reasoning xhigh (else high) | Opus / GPT-5, max reasoning |
-
-Model IDs are current examples, not pins. If an ID is unavailable in the running tool, fall to the nearest tier: cheapest-available for fetcher/poller, most-capable-available for the thinker.
+Raising effort never moves the fetcher or poller off the light tier.
 
 ## Thinker floor
 
-The thinker does the judgment work — classifying comments and writing fixes — so it should not run on the fetch/poll tier. If the resolved thinker model lands on a fast/small model (Haiku, `gpt-5-mini`, or the tool's small default) with no effort flag raising it (for example, a Haiku session invoked with no `--high`/`--xhigh`), warn and confirm before proceeding. Options: run anyway as a fast, lower-confidence pass; re-run with `--high`/`--xhigh`; or raise the session/configured model. Unattended, proceed low-confidence — auto-apply only unambiguous must-fix and list the rest. The fetcher and poller on a small tier are expected and need no warning.
+The thinker classifies comments and writes fixes, so it must not run on the light tier. On Claude Code it runs as `ks-builder` or `ks-thinker`, so it never inherits a small session model. On Cursor (`inherit`) and Codex (session pass) it does. There, if the session model is a fast/small one (Haiku, a `-mini` model, effort `low`) and no effort flag raises it, warn and confirm before proceeding. Options: run anyway as a fast, lower-confidence pass; re-run with `--high` / `--xhigh`; or switch the session model. Unattended, proceed low-confidence: auto-apply only unambiguous must-fix and list the rest.
 
-## How each tool runs the roles
+## Claude Code notes
 
-**Claude Code** — spawn each role as a subagent (Task tool) with the `model` set from the matrix. Real subagents keep the fetcher/poller output out of the thinker's context, which is where the token savings come from. Map effort to reasoning with the usual keywords (`think hard` for `--high`, `ultrathink` for `--xhigh`). For step 8, prefer the PR activity subscription over an active poll loop.
-
-**Codex** — Codex has no separate subagent spawn today, so run each role as a distinct pass in the loop. Keep fetch and poll passes on the cheap model (switch with `-c model=` / `-c model_reasoning_effort=` or the session config) and return compact structured output so the thinker pass stays small. If `xhigh` is not accepted, use `high`.
-
-**Cursor** — no programmatic subagents today; run the roles as separate passes and pick the model per pass from Cursor's model selector. Use a fast tier for fetch/poll, a strong tier for the thinker.
-
-## Configuring a default thinker model
-
-If you want the thinker to default to something other than the session model, set it in the tool's own model config (Claude Code subagent model, Codex `model` config, Cursor model selector) before invoking the skill. The effort flags still override it for that run.
+Spawn each role as its own agent so fetcher and poller output stays out of the thinker's context. That isolation is where most of the savings come from. For step 8, prefer the PR activity subscription over an active poll loop.
