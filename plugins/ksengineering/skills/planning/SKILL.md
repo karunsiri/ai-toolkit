@@ -29,6 +29,15 @@ Helpful but optional: existing code or architecture context, who consumes the re
 
 If you can't answer the four, we're not ready to plan — we're ready to *discuss*, which is a different thing.
 
+## Model Tiers
+
+Tiers come from the shared [model tiers](../../references/model-tiers.md).
+
+- **Planning itself is deep.** Framing, risk order, spikes and design forks run in the main session. If the session model is below the deep tier, warn once at the start and suggest switching the model. Do not switch on your own.
+- **Grounding is light.** Looking up recent commits, open PRs, where a component lives, or what a config file holds goes to the light tier (`ks-scout`, or a low-effort pass on Codex). Keep only the compact answer.
+- **Hard forks may go deeper.** If a design fork has no clear winner, or security or data is at stake, offer to hand that one question to `ks-thinker`. Ask first.
+- **Tasks carry their tier.** Every near-term task in `tasks.md` gets a tier tag so whoever executes it knows what to spend (see step 5).
+
 ## Steps
 
 ### 1. Frame
@@ -86,6 +95,16 @@ Write two files into a per-plan directory, slug from the goal (e.g. `checkout-re
 
 These are the handoff — another session or teammate executes from them.
 
+**Tag every near-term task** with one tier and, only when the risk calls for it, `[verify]`:
+
+- `[light]` — search, inventory, docs/README, mechanical renames. No verifier.
+- `[standard]` — code, config, tests. The executor runs its own checks; the session reads the diff.
+- `[deep]` — a task that is itself a hard judgment (a design call, a tricky root cause). Rare: most deep work already happened while planning.
+- `[verify]` — add only for risky changes: security, permissions, data, prod config, money. One separate check at the standard tier with 2-3 named risks; reuse the executor's tests.
+- `[manual]` — steps only the user can do (deploys, merges, running playbooks against real hosts).
+
+Pick the lowest tier that can do the task well. Do not add `[verify]` by default: most of a plan's cost goes into verifiers that find nothing.
+
 ## Plan Artifact
 
 `.agents/plans/{slug}/plan.md`:
@@ -99,6 +118,11 @@ These are the handoff — another session or teammate executes from them.
 - **Success criteria**: [observable]
 - **Constraints**: [deadline, stack, team, compliance]
 - **Work type**: feature | migration | refactor | spike-heavy
+
+## Execution
+- Tiers (ksengineering model tiers): `[light]` search/docs, `[standard]` code/config, `[deep]` hard judgment
+- `[verify]` only on risky tasks: [list which, and the 2-3 risks each]
+- `[manual]` steps: [who runs them]
 
 ## Unknowns & Prerequisites
 - **Open questions**: [...]
@@ -140,11 +164,13 @@ These are the handoff — another session or teammate executes from them.
 # Tasks: {goal}
 
 ## Phase 1 — {name}   (current wave — atomic)
-- [ ] [one clear outcome, ~1 PR, verifiable]
-- [ ] ...
+- [ ] `[light]` [inventory / search task, returns a list]
+- [ ] `[standard]` [one clear outcome, ~1 PR, verifiable]
+- [ ] `[standard][verify]` [risky change; risks: X, Y]
+- [ ] `[manual]` [deploy / merge / run]
 
 ## Phase 2 — {name}   (next wave — atomic)
-- [ ] ...
+- [ ] `[standard]` ...
 
 ## Phase 3+ — later   (coarse — sharpen on arrival)
 - [ ] [one-line intent]
@@ -166,7 +192,8 @@ Don't repeat this line every single turn if nothing changed and the last pointer
 - Do not produce a plan before goal, non-goals, success criteria, and constraints are all pinned. Missing one → interrogate, don't guess.
 - Do not phase past a genuine unknown without proposing a spike to resolve it.
 - Every phase must have a verifiable exit criterion. If you can't state the check, the phase isn't defined yet.
-- Never emit time or effort estimates.
+- Never emit time or effort estimates. (Tier tags are not estimates: they say which model to spend, not how long.)
+- Every near-term task gets a tier tag. `[verify]` only on risky tasks, never by default.
 - Don't fully decompose later phases — rolling waves only. Detail follows knowledge.
 - Prerequisites fold into the risk order; risky/slow ones lead, trivial ones inline. No standalone "Phase 0" unless a prereq genuinely blocks everything.
 - Stay in lane: deep architecture, test tactics, and ship gating belong to other skills (see below). Orchestrate them; don't reimplement them.

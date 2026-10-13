@@ -6,7 +6,7 @@ argument-hint: "[--high|--xhigh] [--bot-only] [--resolve] [--include-suppressed]
 
 # /address-reviews
 
-Drive a pull request's review feedback to zero in a loop. Fetch, classify, show the summary, fix, reply, re-request, wait for the bot's next pass, repeat. Cheap models do the fetching and polling; the configured model does the thinking and the code.
+Drive a pull request's review feedback to zero in a loop. Fetch, classify, show the summary, fix, reply, re-request, wait for the bot's next pass, repeat. The light tier does the fetching and polling; the standard tier (deep with `--high` / `--xhigh`) does the thinking and the code.
 
 Bot re-review is asynchronous: after a fix the bot takes a while to re-scan, and its comments appear only when that pass completes. The loop re-requests the bot, waits for the completion signal, addresses whatever comes back, and keeps going until the bot completes a pass with nothing new to say (or a loop guard trips, or the user stops it).
 
@@ -18,23 +18,23 @@ Bot re-review is asynchronous: after a fix the bot takes a while to re-scan, and
 
 | Flag | Meaning | Default |
 |------|---------|---------|
-| `--high` | Run the thinker at high effort (stronger model, more reasoning) | off |
-| `--xhigh` | Run the thinker at max effort. Wins over `--high` if both given | off |
+| `--high` | Run the thinker on the deep tier (stronger model, high effort) | off |
+| `--xhigh` | Run the thinker on the deep tier at max effort. Wins over `--high` if both given | off |
 | `--bot-only` | Only address comments from bots/automated agents (Copilot, CodeRabbit, Dependabot, ox-security, Sonar, etc.). Skip human reviewers | off (all) |
 | `--resolve` | Resolve a thread after its fix is pushed | off (leave open) |
 | `--include-suppressed` | Also fetch and fix a bot's suppressed / low-confidence comments (e.g. Copilot's `Comments suppressed due to low confidence` block) | off (skip suppressed) |
 
-No effort flag means the thinker uses its configured model, and if none is configured, the current session model. See [references/models.md](references/models.md) for the per-tool model matrix and how each effort maps to a model.
+No effort flag runs the thinker on the standard tier. See [references/models.md](references/models.md) for how each role and flag maps to a tier, and the shared [model tiers](../../references/model-tiers.md) for what each tier means per tool.
 
 ## Roles
 
-Three roles, each on the cheapest model that can do its job. On Claude Code, spawn each as a subagent with the model below so context and cost stay isolated. On tools without subagents (Codex, Cursor today), run each role as a focused, separate pass in the main loop — the token savings still come from the compact structured output each pass returns.
+Three roles, each on the cheapest tier that can do its job. On Claude Code and Cursor, spawn each as the plugin agent below so context and cost stay isolated. On Codex (plugins cannot ship agents), run each role as a focused, separate pass in the main loop — the token savings still come from the compact structured output each pass returns.
 
 | Role | Job | Access | Model |
 |------|-----|--------|-------|
-| **Fetcher** | Discover the target PR, pull open review threads + comments + check runs, tag each item as bot or human, return a normalized list | read-only | cheapest / fastest available |
-| **Thinker** | Classify each item, write the summary, implement fixes, draft replies | read + write | configured, else session model; raised by `--high` / `--xhigh` |
-| **Poller** | After a push, wait for re-requested bots to finish an async re-review, return only each bot's completion state (and failure head) | read-only | cheapest / fastest available |
+| **Fetcher** | Discover the target PR, pull open review threads + comments + check runs, tag each item as bot or human, return a normalized list | read-only | light (`ks-scout`) |
+| **Thinker** | Classify each item, write the summary, implement fixes, draft replies | read + write | standard (`ks-builder`); deep (`ks-thinker`) with `--high` / `--xhigh` |
+| **Poller** | After a push, wait for re-requested bots to finish an async re-review, return only each bot's completion state (and failure head) | read-only | light (`ks-scout`) |
 
 The Poller is active **only for bots/automated agents** (review bots and scanners that re-review and post further comments). It waits for the completion signal, reports state, and never reads or fixes code — the next iteration's fixes go to the Thinker.
 
@@ -44,8 +44,8 @@ The Poller is active **only for bots/automated agents** (review bots and scanner
 
 - Parse `$ARGUMENTS` for the five flags. `--xhigh` overrides `--high`.
 - Find the PR for the current branch via `~~source control`. If none, or several, ask which PR.
-- **Thinker floor check.** Resolve the thinker model (effort flag → configured model → session model). If it lands on a fast/small tier (Haiku, `gpt-5-mini`, or the tool's small default) with no effort flag raising it, the thinker would be doing code judgment on a model built for data shuttling. Warn and confirm before proceeding, offering to: (a) run anyway as a fast, lower-confidence pass; (b) re-run with `--high` / `--xhigh`; or (c) raise the session or configured model. If no user is available to answer (unattended loop), proceed but mark the run low-confidence: auto-apply only unambiguous must-fix, and list should-fix / optional for review instead of changing them. The fetcher and poller on a small tier need no warning; only the thinker does.
-- Confirm the effort and mode you resolved in one line, e.g. `PR #142 | effort: high | thinker: Opus 5 | scope: bots only | resolve: on`.
+- **Thinker floor check.** Resolve the thinker tier (no flag → standard, `--high` / `--xhigh` → deep). On Claude Code the thinker runs as its own agent, so this always holds. Where the thinker runs on the session model (Cursor `inherit`, Codex), check the session model: if it is a fast/small one (Haiku, a `-mini` model, effort `low`) with no effort flag raising it, the thinker would be doing code judgment on a model built for data shuttling. Warn and confirm before proceeding, offering to: (a) run anyway as a fast, lower-confidence pass; (b) re-run with `--high` / `--xhigh`; or (c) switch the session model. If no user is available to answer (unattended loop), proceed but mark the run low-confidence: auto-apply only unambiguous must-fix, and list should-fix / optional for review instead of changing them. The fetcher and poller on the light tier need no warning; only the thinker does.
+- Confirm the effort and mode you resolved in one line, e.g. `PR #142 | thinker: deep (ks-thinker) | scope: bots only | resolve: on`.
 
 ### 1. Fetch (Fetcher)
 

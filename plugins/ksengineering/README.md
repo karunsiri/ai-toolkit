@@ -44,7 +44,25 @@ Walk through a structured debugging process: clarify expected vs actual, capture
 /address-reviews --high --bot-only --resolve
 ```
 
-Fetches open review threads with a cheap model, classifies each into must-fix / should-fix / optional / false-positive, shows a colored summary before touching code, applies fixes with the effort-selected model, replies in-thread (mentioning the commenter when there is no thread), resolves the threads it fixed, re-requests bot review, watches bot CI for new comments, and loops until clean. Flags: `--high`/`--xhigh` set thinker effort, `--bot-only` limits scope to bots/scanners, `--resolve` closes addressed threads.
+Fetches open review threads on the light tier, classifies each into must-fix / should-fix / optional / false-positive, shows a colored summary before touching code, applies fixes on the standard tier (deep with `--high`/`--xhigh`), replies in-thread (mentioning the commenter when there is no thread), resolves the threads it fixed, re-requests bot review, watches bot CI for new comments, and loops until clean. Flags: `--high`/`--xhigh` move the thinker to the deep tier, `--bot-only` limits scope to bots/scanners, `--resolve` closes addressed threads.
+
+## Model Tiers
+
+Each skill step runs on a tier instead of the session model, to cut token use. Tiers, models and per-tool behavior are defined once in [references/model-tiers.md](references/model-tiers.md).
+
+| Tier | Used for | Claude Code agent |
+|---|---|---|
+| deep | planning, diagnosis, hard design calls | main session; `ks-thinker` (opus, high) when offered |
+| standard | code, config, tests, review fixes | `ks-builder` (sonnet, medium) |
+| light | search, fetch, poll, docs edits | `ks-scout` (haiku, low, read-only) |
+
+- **Claude Code**: agents in `agents/` set their own model and effort.
+- **Cursor**: the same agents in `agents-cursor/` with `model: inherit`. You get the role split and separate context; pick a fast model by hand for light passes.
+- **Codex**: plugins cannot ship agents, so skills give text guidance (`codex -c model_reasoning_effort=low ...`).
+
+Verification follows risk: none for light work, the executor's own checks for standard work, and a separate short check only for risky changes (security, permissions, data, prod config).
+
+Cursor and Codex behavior is from their docs and not yet tested.
 
 ## Standalone + Supercharged
 

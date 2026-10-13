@@ -1,11 +1,12 @@
 {
   "name": "ksengineering",
   "displayName": "KSEngineering",
-  "version": "0.4.4",
+  "version": "0.5.0",
   "description": "Engineering workflows — debugging, risk-first planning, and PR review handling. Customized for DevOps, Ruby, systems, cloud-native, and web app work.",
   "author": { "name": "Karun Siritheerathamrong" },
   "repository": "https://github.com/karunsiri/ai-toolkit",
   "keywords": ["debug", "planning", "engineering", "review"],
   "category": "developer-tools",
-  "skills": "./skills/"
+  "skills": "./skills/",
+  "agents": "./agents-cursor/"
 }
