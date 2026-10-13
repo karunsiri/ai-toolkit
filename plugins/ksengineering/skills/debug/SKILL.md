@@ -23,6 +23,19 @@ Tell me about the problem. Any of these help:
 - Logs or screenshots
 - Expected vs. actual behavior
 
+## Model Tiers
+
+Tiers come from the shared [model tiers](../../references/model-tiers.md). In short:
+
+| Step | Tier | Who |
+|------|------|-----|
+| Gathering evidence (logs, recent deploys, code paths, git history) | light | `ks-scout`, or a low-effort pass on Codex |
+| Reproduce, isolate decisions, diagnose | deep | the main session |
+| Fix + regression test | standard | `ks-builder`, or inline when it is a few lines |
+| Ledger updates | inline | the main session; never spawn an agent for a ledger edit |
+
+If the session model is below the deep tier, warn once before step 3 and suggest switching the model. Do not switch on your own.
+
 ## Steps
 
 ### 1. Reproduce
@@ -39,6 +52,8 @@ If the user isn't sure how to reproduce:
 
 Pin what matters: environment, timing, input shape, infrastructure state.
 
+**Tier: light** for fetching the raw material (log lines around the failure, recent deploys, config diffs, dependency bumps). Ask `ks-scout` narrow questions and keep its compact answers; judging what they mean stays in the session.
+
 ### 2. Isolate
 
 Narrow down the component, service, or code path. Try in this order — escalate only when the prior tactic fails:
@@ -53,7 +68,7 @@ Narrow down the component, service, or code path. Try in this order — escalate
 
 Also check: recent deploys, config changes, dependency updates, and anything that correlates with when the issue started.
 
-**Tier: light** for the searching in this step: finding the code path, every place a knob is read, recent commits on the affected files, log lines around the failure. Hand each narrow question to the light tier (`ks-scout` on Claude Code and Cursor, a low-effort pass on Codex) and keep only its compact answer (`file:line`, counts, exact lines). Reading the results and deciding what to try next stays in the session. See [model tiers](../../references/model-tiers.md).
+**Tier: light** for the searching in this step: finding the code path, every place a knob is read, recent commits on the affected files. Hand each narrow question to `ks-scout` and keep only its compact answer (`file:line`, counts, exact lines). Deciding what to try next stays in the session.
 
 ### 3. Diagnose
 
@@ -66,11 +81,15 @@ For each hypothesis:
 
 Cross-reference against the **debug ledger** (see below). Every new hypothesis must hold for **all** prior observations, not just the latest run. If any past run contradicts it — refine or discard.
 
+**Tier: deep, in the session.** The session already holds the ledger and the context, so it does the reasoning. If two rounds of hypotheses have been disproved, or the bug touches security or data, offer to hand the open question to `ks-thinker` with the ledger as its brief. Ask first.
+
 ### 4. Fix
 
 - Propose a fix with clear explanation of why it works.
 - Walk through side effects and edge cases.
 - Suggest a test that would have caught this and will prevent regression.
+
+**Tier: standard.** Once the fix is agreed, `ks-builder` writes it and the regression test and runs the affected tests; the session reads the diff. For a fix of a few lines, do it inline instead: spawning costs more than it saves. Add a separate verifier only for risky fixes (security, permissions, data, prod config), per the verification rules in the tier file.
 
 ## Debug Ledger
 
