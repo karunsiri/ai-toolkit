@@ -109,6 +109,10 @@ plugins/
 │   ├── mcp.json          # MCP servers (Cursor)
 │   ├── CONNECTORS.md
 │   ├── README.md
+│   ├── agents/           # Tier agents (Claude Code)
+│   ├── agents-cursor/    # Same agents, model: inherit (Cursor)
+│   ├── references/
+│   │   └── model-tiers.md # Shared tier -> model map
 │   └── skills/
 │       ├── address-reviews/
 │       │   ├── SKILL.md
@@ -136,3 +140,13 @@ plugins/
 ## License
 
 MIT
+
+## Releasing
+
+Bump `version` in every manifest of the plugin (`.claude-plugin`, `.cursor-plugin`, `.codex-plugin`), then run:
+
+```bash
+sh scripts/check-parity.sh
+```
+
+It fails when manifest versions differ, when `agents/` and `agents-cursor/` drift apart, or when a relative markdown link is broken.
