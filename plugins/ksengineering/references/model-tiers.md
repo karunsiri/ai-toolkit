@@ -29,6 +29,7 @@ Model names are examples, not pins. If one is unavailable, fall to the nearest t
 | Tier | Agent | Example |
 |------|-------|---------|
 | light | `ksengineering:ks-scout` (read-only) | "Use ks-scout to find every caller of `TokenTTL`; return `file:line` only." |
+| light edit | `ksengineering:ks-builder` spawned with model `haiku`, effort `low`; or inline in the session when it is a few lines | "Use ks-builder (haiku, low) to update the README install section to match `plugin.json`." |
 | standard | `ksengineering:ks-builder` | "Use ks-builder to apply fix 1 and 2, run `bundle exec rspec spec/auth`, report the diff." |
 | deep | `ksengineering:ks-thinker` | Only when offered and accepted (see **Session floor**). |
 
