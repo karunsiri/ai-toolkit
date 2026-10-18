@@ -33,7 +33,7 @@ If you can't answer the four, we're not ready to plan — we're ready to *discus
 
 Tiers come from the shared [model tiers](../../references/model-tiers.md).
 
-- **Planning itself is deep.** Framing, risk order, spikes and design forks run in the main session. If the session model is below the deep tier, warn once at the start and suggest switching the model. Do not switch on your own.
+- **Planning itself is deep.** Framing, risk order, spikes and design forks run in the main session. If the session model is below the deep tier, ask the user at the start whether to switch, and wait for the answer before step 1 (see **Session floor** in the shared file). Do not continue silently. Do not switch on your own.
 - **Grounding is light.** Looking up recent commits, open PRs, where a component lives, or what a config file holds goes to the light tier (`ks-scout`, or a low-effort pass on Codex). Keep only the compact answer.
 - **Hard forks may go deeper.** If a design fork has no clear winner, or security or data is at stake, offer to hand that one question to `ks-thinker`. Ask first.
 - **Tasks carry their tier.** Every near-term task in `tasks.md` gets a tier tag so whoever executes it knows what to spend (see step 5).
