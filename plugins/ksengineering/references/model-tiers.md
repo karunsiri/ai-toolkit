@@ -49,7 +49,15 @@ In an interactive session, switch with `/model` before the pass. If you have cus
 
 ## Session floor
 
-**Deep** steps run in the main session, not a subagent: a fresh agent would re-read everything the session already knows. If the session model is below the deep tier (e.g. Haiku, a `-mini` model, or effort `low`), warn once before a deep step and suggest switching (`/model` in Claude Code and Codex, the model selector in Cursor). If the problem looks hard (several failed hypotheses, a design fork with no clear winner, security or data at stake), also offer to hand that step to `ks-thinker`. Never switch on your own.
+**Deep** steps run in the main session, not a subagent: a fresh agent would re-read everything the session already knows. If the session model is below the deep tier (e.g. Sonnet, Haiku, a `-mini` model, or effort below `high`), **ask before the deep step and wait for the answer**. Do not continue silently. Ask once per run; if the user declines, do not ask again.
+
+Use the tool's question prompt (`AskUserQuestion` in Claude Code, `AskQuestion` in Cursor). In Codex, or with no question tool, ask in plain text and stop. Options:
+
+1. **Switch model** (recommended). The user switches (`/model` in Claude Code and Codex, the model selector in Cursor), then says "continue". Do not proceed until they do.
+2. **Continue on the current model.**
+3. **Hand to `ks-thinker`.** Claude Code only. Offer it only when the problem looks hard (several failed hypotheses, a design fork with no clear winner, security or data at stake).
+
+Never switch on your own. If no user is available to answer (unattended run), continue and mark the result low-confidence.
 
 ## Verification
 

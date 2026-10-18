@@ -34,7 +34,7 @@ Tiers come from the shared [model tiers](../../references/model-tiers.md). In sh
 | Fix + regression test | standard | `ks-builder`, or inline when it is a few lines |
 | Ledger updates | inline | the main session; never spawn an agent for a ledger edit |
 
-If the session model is below the deep tier, warn once before step 3 and suggest switching the model. Do not switch on your own.
+If the session model is below the deep tier, ask the user before step 3 whether to switch, and wait for the answer (see **Session floor** in the [model tiers](../../references/model-tiers.md)). Do not continue silently. Do not switch on your own.
 
 ## Steps
 
