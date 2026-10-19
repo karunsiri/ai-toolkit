@@ -1,6 +1,6 @@
 # Model selection
 
-Tiers, model names and per-tool mechanics live in the shared [model tiers](../../../references/model-tiers.md). This file only maps this skill's roles and flags onto those tiers.
+Tiers, model names and per-tool mechanics live in the shared [model tiers](model-tiers.md). This file only maps this skill's roles and flags onto those tiers.
 
 ## Roles
 

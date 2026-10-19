@@ -48,7 +48,7 @@ Fetches open review threads on the light tier, classifies each into must-fix / s
 
 ## Model Tiers
 
-Each skill step runs on a tier instead of the session model, to cut token use. Tiers, models and per-tool behavior are defined once in [references/model-tiers.md](references/model-tiers.md).
+Each skill step runs on a tier instead of the session model, to cut token use. Tiers, models and per-tool behavior are defined in [model-tiers.md](skills/debug/references/model-tiers.md). Each skill ships an identical copy in its own `references/`, so edit all three together.
 
 | Tier | Used for | Claude Code agent |
 |---|---|---|

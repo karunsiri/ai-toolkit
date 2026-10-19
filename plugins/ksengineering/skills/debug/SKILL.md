@@ -25,7 +25,7 @@ Tell me about the problem. Any of these help:
 
 ## Model Tiers
 
-Tiers come from the shared [model tiers](../../references/model-tiers.md). In short:
+Tiers come from the shared [model tiers](references/model-tiers.md). In short:
 
 | Step | Tier | Who |
 |------|------|-----|
@@ -34,7 +34,7 @@ Tiers come from the shared [model tiers](../../references/model-tiers.md). In sh
 | Fix + regression test | standard | `ks-builder`, or inline when it is a few lines |
 | Ledger updates | inline | the main session; never spawn an agent for a ledger edit |
 
-If the session model is below the deep tier, ask the user before step 3 whether to switch, and wait for the answer (see **Session floor** in the [model tiers](../../references/model-tiers.md)). Do not continue silently. Do not switch on your own.
+If the session model is below the deep tier, ask the user before step 3 whether to switch, and wait for the answer (see **Session floor** in the [model tiers](references/model-tiers.md)). Do not continue silently. Do not switch on your own.
 
 ## Steps
 

@@ -24,7 +24,7 @@ Bot re-review is asynchronous: after a fix the bot takes a while to re-scan, and
 | `--resolve` | Resolve a thread after its fix is pushed | off (leave open) |
 | `--include-suppressed` | Also fetch and fix a bot's suppressed / low-confidence comments (e.g. Copilot's `Comments suppressed due to low confidence` block) | off (skip suppressed) |
 
-No effort flag runs the thinker on the standard tier. See [references/models.md](references/models.md) for how each role and flag maps to a tier, and the shared [model tiers](../../references/model-tiers.md) for what each tier means per tool.
+No effort flag runs the thinker on the standard tier. See [references/models.md](references/models.md) for how each role and flag maps to a tier, and the shared [model tiers](references/model-tiers.md) for what each tier means per tool.
 
 ## Roles
 

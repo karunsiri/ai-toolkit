@@ -111,16 +111,16 @@ plugins/
 │   ├── README.md
 │   ├── agents/           # Tier agents (Claude Code)
 │   ├── agents-cursor/    # Same agents, model: inherit (Cursor)
-│   ├── references/
-│   │   └── model-tiers.md # Shared tier -> model map
-│   └── skills/
+│   └── skills/           # Each has references/model-tiers.md (identical copies)
 │       ├── address-reviews/
 │       │   ├── SKILL.md
 │       │   └── references/
 │       ├── debug/
-│       │   └── SKILL.md
+│       │   ├── SKILL.md
+│       │   └── references/
 │       └── planning/
-│           └── SKILL.md
+│           ├── SKILL.md
+│           └── references/
 └── ksproductivity/       # Session continuity
     ├── .codex-plugin/
     │   └── plugin.json   # Codex manifest
