@@ -44,6 +44,8 @@ Tiers come from the shared [model tiers](../../references/model-tiers.md).
 
 Pin the four inputs above. Refuse to proceed while any is missing — restate what you have, name what's missing, ask for it.
 
+**Show before you ask.** The user cannot see inside a question prompt's options, and may not see the context you gathered. Before any question that asks them to approve a proposal (goal, non-goals, success criteria, constraints, work type, phasing), print the full proposal as plain reply text first, as a short list. Then ask. A question like "Proposed non-goals. All OK?" with the content only in the option text is a bug. Never ask for approval of something the reply text has not shown.
+
 Then **detect the work type**, because they phase differently:
 
 - **Feature (greenfield)** — walking skeleton first, then flesh out.
@@ -190,6 +192,7 @@ Don't repeat this line every single turn if nothing changed and the last pointer
 ## Operating Rules
 
 - Do not produce a plan before goal, non-goals, success criteria, and constraints are all pinned. Missing one → interrogate, don't guess.
+- Never ask the user to approve a proposal they have not seen. Print it in the reply first, then ask (see step 1).
 - Do not phase past a genuine unknown without proposing a spike to resolve it.
 - Every phase must have a verifiable exit criterion. If you can't state the check, the phase isn't defined yet.
 - Never emit time or effort estimates. (Tier tags are not estimates: they say which model to spend, not how long.)
