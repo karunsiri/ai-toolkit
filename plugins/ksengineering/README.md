@@ -8,6 +8,7 @@ Custom engineering plugin for DevOps, Ruby, systems, cloud-native, and web app w
 |---|---|
 | `/planning` | Risk-first phased implementation plan — frame, surface unknowns, phase the work, emit plan + tasks |
 | `/debug` | Structured debugging session — reproduce, isolate, diagnose, and fix |
+| `/code-review` | Review a change for correctness, security, performance, design, and tests; labeled feedback posted as inline PR comments |
 | `/address-reviews` | Agentic loop that addresses PR review feedback — fetch, classify, summarize, fix, reply in-thread, re-request bot review, watch bot CI, repeat |
 
 ## Skills
@@ -18,6 +19,7 @@ Domain knowledge Claude uses automatically when relevant:
 |---|---|
 | `planning` | Plan engineering work in risk-first phases — walking skeleton first, spikes for unknowns, no estimates |
 | `debug` | Reproduce, isolate, diagnose, and fix bugs across any stack |
+| `code-review` | Review a diff or PR: context and CI first, then logic, design, naming, tests, security and performance; blocker / suggestion / nit labels |
 | `address-reviews` | Work a PR's review threads to zero — classify (must/should/optional/false-positive), fix, reply, resolve, re-request, watch bot CI |
 
 ## Example Workflows
@@ -37,6 +39,14 @@ Nails down goal, non-goals, success criteria, and constraints (won't proceed whi
 ```
 
 Walk through a structured debugging process: clarify expected vs actual, capture reproduction steps, isolate the fail path, form ranked hypotheses, fix.
+
+### Review a PR
+
+```
+/code-review 142
+```
+
+Asks once whether to use the deep tier (default: session model). Reads the PR description, linked ticket and CI first, finds callers outside the diff on the light tier, then reviews logic, design, naming, tests, security and performance. Shows a summary labeled blocker / suggestion / nit / nice with a verdict, asks how to post, then posts one review with inline comments on the exact lines. With no PR it reviews the local diff and prints the summary only.
 
 ### Address PR review feedback
 
@@ -73,7 +83,7 @@ Every command works without integrations — paste errors, describe the system, 
 | Planning | Describe the work | Project tracker (create milestones + tickets) |
 | Debug sessions | Describe the problem | Monitoring (pull logs and metrics) |
 | Address reviews | Paste review comments | Source control (fetch threads, reply, resolve, re-request), CI/CD (watch bot runs) |
-| Code review | Paste diff or code | Source control (pull PRs automatically) |
+| Code review | Paste diff or code | Source control (pull PRs, post inline comments), CI/CD (check status), Project tracker (acceptance criteria) |
 | Incident response | Describe the incident | Monitoring, Incident management |
 
 ## MCP Integrations
