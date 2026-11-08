@@ -145,13 +145,19 @@ If **~~monitoring** is connected:
 - Pull logs, error rates, and metrics around the time of the issue
 - Show recent deploys and config changes that may correlate
 
+If no **~~monitoring** tool is available, ask the user to paste the logs and metrics.
+
 If **~~source control** is connected:
 - Identify recent commits that touched affected code paths
 - Check if the issue correlates with a specific change
 
+If no **~~source control** tool is available, use `git log` and ask the user for PR links.
+
 If **~~project tracker** is connected:
 - Search for related bug reports or known issues
 - Create a ticket for the fix once identified
+
+If no **~~project tracker** tool is available, ask the user for the ticket text.
 
 ## Tips
 

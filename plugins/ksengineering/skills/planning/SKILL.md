@@ -215,9 +215,13 @@ If **~~project tracker** is connected:
 - Offer to create the phases as milestones/epics and the atomic tasks as tickets, preserving the dependency links.
 - Pull existing tickets that overlap so the plan doesn't duplicate planned work.
 
+If no **~~project tracker** tool is available, ask the user for related ticket text.
+
 If **~~source control** is connected:
 - Check recent commits and open PRs touching the affected area to ground the plan in the current state.
 - Map phases to branches/PRs where it clarifies the sequence.
+
+If no **~~source control** tool is available, use `git log` and `gh` if installed.
 
 ## Tips
 

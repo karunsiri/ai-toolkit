@@ -106,8 +106,6 @@ plugins/
 │   │   └── plugin.json   # Claude Code manifest
 │   ├── .cursor-plugin/
 │   │   └── plugin.json   # Cursor manifest
-│   ├── .mcp.json         # MCP servers (Claude Code)
-│   ├── mcp.json          # MCP servers (Cursor)
 │   ├── CONNECTORS.md
 │   ├── README.md
 │   ├── agents/           # Tier agents (Claude Code)
