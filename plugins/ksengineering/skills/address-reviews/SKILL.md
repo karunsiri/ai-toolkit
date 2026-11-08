@@ -180,9 +180,9 @@ Treat an author as a bot when the login ends in `[bot]`, the account type is `Bo
 
 ## If Connectors Available
 
-If **~~source control** is connected: read review threads, comment authors, and check runs directly; reply in-thread, resolve threads, re-request reviewers, and push through it.
+If **~~source control** is connected: read review threads, comment authors, and check runs directly; reply in-thread, resolve threads, re-request reviewers, and push through it. If no **~~source control** tool is available, use `gh`, or ask the user to paste the review comments.
 
-If **~~CI/CD** is connected: read bot/scanner run status and logs to decide when a loop iteration is clear.
+If **~~CI/CD** is connected: read bot/scanner run status and logs to decide when a loop iteration is clear. If no **~~CI/CD** tool is available, use `gh pr checks`, or ask the user for the run status.
 
 ## Tips
 

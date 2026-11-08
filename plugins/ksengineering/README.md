@@ -86,13 +86,14 @@ Every command works without integrations — paste errors, describe the system, 
 | Code review | Paste diff or code | Source control (pull PRs, post inline comments), CI/CD (check status), Project tracker (acceptance criteria) |
 | Incident response | Describe the incident | Monitoring, Incident management |
 
-## MCP Integrations
+## Works better with
 
-> If you see unfamiliar placeholders or need to check which tools are connected, see [CONNECTORS.md](CONNECTORS.md).
+No MCP servers are bundled. Add the ones you want. See [CONNECTORS.md](CONNECTORS.md) for the placeholders.
 
-| Category | Examples | What It Enables |
+| Server | Unlocks | Skill |
 |---|---|---|
-| **Source control** | GitHub, GitLab | PR diffs, commit history, branch status |
-| **Project tracker** | Linear, Jira | Ticket status, sprint data |
-| **Monitoring** | Datadog, New Relic | Logs, metrics, alerts |
-| **Incident management** | PagerDuty | On-call schedules, incident tracking |
+| GitHub | PR threads, replies, resolve, commit history | `address-reviews`, `code-review`, `debug`, `planning` |
+| Linear | Ticket lookup, create tickets from a plan | `code-review`, `debug`, `planning` |
+| Atlassian (Jira) | Ticket lookup, create tickets from a plan | `code-review`, `debug`, `planning` |
+| Datadog | Logs, error rates, deploys near the issue | `debug` |
+| PagerDuty | On-call and incident data | None yet |

@@ -186,8 +186,8 @@ After posting, give the review link and the counts.
 
 ## If Connectors Available
 
-If **~~source control** is connected: fetch the PR, diff, open threads, and check runs, and post the review inline through it.
+If **~~source control** is connected: fetch the PR, diff, open threads, and check runs, and post the review inline through it. If no **~~source control** tool is available, use `gh`, or ask the user to paste the diff.
 
-If **~~CI/CD** is connected: read the failing job's log for step 1.
+If **~~CI/CD** is connected: read the failing job's log for step 1. If no **~~CI/CD** tool is available, ask the user for the log.
 
-If **~~project tracker** is connected: read the linked ticket's acceptance criteria and check the change meets them.
+If **~~project tracker** is connected: read the linked ticket's acceptance criteria and check the change meets them. If no **~~project tracker** tool is available, ask the user for the ticket text.
